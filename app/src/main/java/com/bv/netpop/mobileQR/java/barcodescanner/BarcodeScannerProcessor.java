@@ -43,10 +43,10 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
   private static final String TAG = "BarcodeProcessor";
   private final BarcodeScanner barcodeScanner;
-  private ArrayList<String> bc;
-  private BarcodeActivityAdapter projectAdapter;
-  private SoundPool soundPool;
-  private int sound1;
+  private final ArrayList<String> bc;
+  private final BarcodeActivityAdapter projectAdapter;
+  private final SoundPool soundPool;
+  private final int sound1;
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public BarcodeScannerProcessor(Context context, ArrayList<String> bc, BarcodeActivityAdapter projectAdapter) {
@@ -92,7 +92,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     for (int i = 0; i < barcodes.size(); ++i) {
       Barcode barcode = barcodes.get(i);
       graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode));
-      String rawBC = barcode.getRawValue().toString();
+      String rawBC = barcode.getRawValue();
       if(!bc.contains(rawBC)) {
         bc.add(1,rawBC);
         projectAdapter.notifyItemInserted(1);

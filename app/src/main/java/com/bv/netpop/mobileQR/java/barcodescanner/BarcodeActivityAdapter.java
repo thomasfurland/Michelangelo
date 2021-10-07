@@ -15,7 +15,7 @@ public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivity
 
     List<String> mBarcodes;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bcTextView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

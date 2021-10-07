@@ -91,7 +91,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private int lensFacing = CameraSelector.LENS_FACING_BACK;
   private CameraSelector cameraSelector;
 
-  private ArrayList<String> barcodes = new ArrayList<String>(0);
+  private final ArrayList<String> barcodes = new ArrayList<>(0);
   private BarcodeActivityAdapter projectAdapter;
 
   @Override
@@ -287,13 +287,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     }
 
     try {
-      switch (selectedModel) {
-        case BARCODE_SCANNING:
-          Log.i(TAG, "Using Barcode Detector Processor");
-          imageProcessor = new BarcodeScannerProcessor(this,barcodes,projectAdapter);
-          break;
-        default:
-          throw new IllegalStateException("Invalid model name");
+      if (BARCODE_SCANNING.equals(selectedModel)) {
+        Log.i(TAG, "Using Barcode Detector Processor");
+        imageProcessor = new BarcodeScannerProcessor(this, barcodes, projectAdapter);
+      } else {
+        throw new IllegalStateException("Invalid model name");
       }
     } catch (Exception e) {
       Log.e(TAG, "Can not create image processor: " + selectedModel, e);
@@ -383,7 +381,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
   @Override
   public void onRequestPermissionsResult(
-      int requestCode, String[] permissions, int[] grantResults) {
+          int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     Log.i(TAG, "Permission granted!");
     if (allPermissionsGranted()) {
       bindAllCameraUseCases();

@@ -55,7 +55,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeActivityAdapter;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.common.model.LocalModel;
 import com.bv.netpop.mobileQR.CameraXViewModel;
 import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.R;

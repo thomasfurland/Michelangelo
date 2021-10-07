@@ -1,4 +1,4 @@
-package com.bv.netpop.mobileQR.kotlin.barcodescanner
+package com.bv.netpop.mobileQR.java.barcodescanner
 
 import android.view.LayoutInflater
 import android.view.View

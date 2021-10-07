@@ -1,89 +1,37 @@
-com/bv/netpop/mobileQR/java/posedetector/classification/Utils.java
- com.bv.netpop.mobileQR.java.posedetector.classification.Utils
-com/bv/netpop/mobileQR/java/LivePreviewActivity.java
- com.bv.netpop.mobileQR.java.LivePreviewActivity
 com/bv/netpop/mobileQR/preference/LivePreviewPreferenceFragment.java
  com.bv.netpop.mobileQR.preference.LivePreviewPreferenceFragment
-com/bv/netpop/mobileQR/CameraXViewModel.java
- com.bv.netpop.mobileQR.CameraXViewModel
-com/bv/netpop/mobileQR/java/textdetector/TextRecognitionProcessor.java
- com.bv.netpop.mobileQR.java.textdetector.TextRecognitionProcessor
-com/bv/netpop/mobileQR/java/posedetector/classification/PoseSample.java
- com.bv.netpop.mobileQR.java.posedetector.classification.PoseSample
-com/bv/netpop/mobileQR/java/CameraXLivePreviewActivity.java
- com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity
-com/bv/netpop/mobileQR/java/ChooserActivity.java
- com.bv.netpop.mobileQR.java.ChooserActivity
- com.bv.netpop.mobileQR.java.ChooserActivity$MyArrayAdapter
-com/bv/netpop/mobileQR/java/segmenter/SegmenterProcessor.java
- com.bv.netpop.mobileQR.java.segmenter.SegmenterProcessor
-com/bv/netpop/mobileQR/java/facedetector/FaceGraphic.java
- com.bv.netpop.mobileQR.java.facedetector.FaceGraphic
-com/bv/netpop/mobileQR/java/posedetector/classification/EMASmoothing.java
- com.bv.netpop.mobileQR.java.posedetector.classification.EMASmoothing
-com/bv/netpop/mobileQR/preference/StillImagePreferenceFragment.java
- com.bv.netpop.mobileQR.preference.StillImagePreferenceFragment
-com/bv/netpop/mobileQR/InferenceInfoGraphic.java
- com.bv.netpop.mobileQR.InferenceInfoGraphic
-com/bv/netpop/mobileQR/TemperatureMonitor.java
- com.bv.netpop.mobileQR.TemperatureMonitor
-com/bv/netpop/mobileQR/java/textdetector/TextGraphic.java
- com.bv.netpop.mobileQR.java.textdetector.TextGraphic
-com/bv/netpop/mobileQR/preference/FaceDetectionUtils.java
- com.bv.netpop.mobileQR.preference.FaceDetectionUtils
-com/bv/netpop/mobileQR/java/posedetector/classification/ClassificationResult.java
- com.bv.netpop.mobileQR.java.posedetector.classification.ClassificationResult
-com/bv/netpop/mobileQR/java/CameraXSourceDemoActivity.java
- com.bv.netpop.mobileQR.java.CameraXSourceDemoActivity
-com/bv/netpop/mobileQR/java/posedetector/PoseDetectorProcessor.java
- com.bv.netpop.mobileQR.java.posedetector.PoseDetectorProcessor
- com.bv.netpop.mobileQR.java.posedetector.PoseDetectorProcessor$PoseWithClassification
-com/bv/netpop/mobileQR/java/posedetector/classification/PoseClassifier.java
- com.bv.netpop.mobileQR.java.posedetector.classification.PoseClassifier
-com/bv/netpop/mobileQR/java/objectdetector/ObjectGraphic.java
- com.bv.netpop.mobileQR.java.objectdetector.ObjectGraphic
-com/bv/netpop/mobileQR/java/facedetector/FaceDetectorProcessor.java
- com.bv.netpop.mobileQR.java.facedetector.FaceDetectorProcessor
 com/bv/netpop/mobileQR/preference/CameraXLivePreviewPreferenceFragment.java
  com.bv.netpop.mobileQR.preference.CameraXLivePreviewPreferenceFragment
 com/bv/netpop/mobileQR/FrameMetadata.java
  com.bv.netpop.mobileQR.FrameMetadata
  com.bv.netpop.mobileQR.FrameMetadata$1
  com.bv.netpop.mobileQR.FrameMetadata$Builder
-com/bv/netpop/mobileQR/java/StillImageActivity.java
- com.bv.netpop.mobileQR.java.StillImageActivity
- com.bv.netpop.mobileQR.java.StillImageActivity$1
- com.bv.netpop.mobileQR.java.StillImageActivity$2
- com.bv.netpop.mobileQR.java.StillImageActivity$3
-com/bv/netpop/mobileQR/preference/CameraXSourceDemoPreferenceFragment.java
- com.bv.netpop.mobileQR.preference.CameraXSourceDemoPreferenceFragment
+com/bv/netpop/mobileQR/CameraXViewModel.java
+ com.bv.netpop.mobileQR.CameraXViewModel
+com/bv/netpop/mobileQR/java/CameraXLivePreviewActivity.java
+ com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity
+com/bv/netpop/mobileQR/java/ChooserActivity.java
+ com.bv.netpop.mobileQR.java.ChooserActivity
+ com.bv.netpop.mobileQR.java.ChooserActivity$MyArrayAdapter
 com/bv/netpop/mobileQR/BitmapUtils.java
  com.bv.netpop.mobileQR.BitmapUtils
-com/bv/netpop/mobileQR/java/posedetector/classification/PoseClassifierProcessor.java
- com.bv.netpop.mobileQR.java.posedetector.classification.PoseClassifierProcessor
-com/bv/netpop/mobileQR/java/posedetector/classification/RepetitionCounter.java
- com.bv.netpop.mobileQR.java.posedetector.classification.RepetitionCounter
-com/bv/netpop/mobileQR/java/objectdetector/ObjectDetectorProcessor.java
- com.bv.netpop.mobileQR.java.objectdetector.ObjectDetectorProcessor
 com/bv/netpop/mobileQR/CameraSource.java
  com.bv.netpop.mobileQR.CameraSource
  com.bv.netpop.mobileQR.CameraSource$1
  com.bv.netpop.mobileQR.CameraSource$CameraPreviewCallback
  com.bv.netpop.mobileQR.CameraSource$FrameProcessingRunnable
  com.bv.netpop.mobileQR.CameraSource$SizePair
-com/bv/netpop/mobileQR/java/labeldetector/LabelDetectorProcessor.java
- com.bv.netpop.mobileQR.java.labeldetector.LabelDetectorProcessor
 com/bv/netpop/mobileQR/ScopedExecutor.java
  com.bv.netpop.mobileQR.ScopedExecutor
 com/bv/netpop/mobileQR/GraphicOverlay.java
  com.bv.netpop.mobileQR.GraphicOverlay
  com.bv.netpop.mobileQR.GraphicOverlay$Graphic
-com/bv/netpop/mobileQR/java/segmenter/SegmentationGraphic.java
- com.bv.netpop.mobileQR.java.segmenter.SegmentationGraphic
+com/bv/netpop/mobileQR/InferenceInfoGraphic.java
+ com.bv.netpop.mobileQR.InferenceInfoGraphic
+com/bv/netpop/mobileQR/TemperatureMonitor.java
+ com.bv.netpop.mobileQR.TemperatureMonitor
 com/bv/netpop/mobileQR/BuildConfig.java
  com.bv.netpop.mobileQR.BuildConfig
-com/bv/netpop/mobileQR/java/posedetector/classification/PoseEmbedding.java
- com.bv.netpop.mobileQR.java.posedetector.classification.PoseEmbedding
 com/bv/netpop/mobileQR/java/barcodescanner/BarcodeGraphic.java
  com.bv.netpop.mobileQR.java.barcodescanner.BarcodeGraphic
 com/bv/netpop/mobileQR/java/VisionProcessorBase.java
@@ -102,9 +50,5 @@ com/bv/netpop/mobileQR/CameraSourcePreview.java
  com.bv.netpop.mobileQR.CameraSourcePreview$SurfaceCallback
 com/bv/netpop/mobileQR/java/barcodescanner/BarcodeScannerProcessor.java
  com.bv.netpop.mobileQR.java.barcodescanner.BarcodeScannerProcessor
-com/bv/netpop/mobileQR/java/posedetector/PoseGraphic.java
- com.bv.netpop.mobileQR.java.posedetector.PoseGraphic
-com/bv/netpop/mobileQR/java/labeldetector/LabelGraphic.java
- com.bv.netpop.mobileQR.java.labeldetector.LabelGraphic
 com/bv/netpop/mobileQR/CameraImageGraphic.java
  com.bv.netpop.mobileQR.CameraImageGraphic

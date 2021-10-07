@@ -28,12 +28,10 @@ class EntryChoiceActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_vision_entry_choice)
 
-    findViewById<TextView>(R.id.kotlin_entry_point).setOnClickListener {
+    findViewById<TextView>(R.id.scanner_entry_point).setOnClickListener {
       val intent =
         Intent(
-          this@EntryChoiceActivity,
-          com.bv.netpop.mobileQR.kotlin.ChooserActivity::class.java
-        )
+          this@EntryChoiceActivity, ChooserActivity::class.java)
       startActivity(intent)
     }
   }

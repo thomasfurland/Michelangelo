@@ -27,6 +27,8 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.java.VisionProcessorBase;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /** Barcode Detector */
@@ -34,14 +36,21 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
   private static final String TAG = "BarcodeProcessor";
   private final BarcodeScanner barcodeScanner;
+  private ArrayList<String> bc;
+  private BarcodeActivityAdapter projectAdapter;
 
-  public BarcodeScannerProcessor(Context context) {
+  public BarcodeScannerProcessor(Context context, ArrayList<String> bc, BarcodeActivityAdapter projectAdapter) {
     super(context);
     barcodeScanner = BarcodeScanning.getClient(
             new BarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
             .build());
+
+    this.bc = bc;
+    this.projectAdapter = projectAdapter;
   }
+
+
 
   @Override
   public void stop() {
@@ -63,6 +72,12 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     for (int i = 0; i < barcodes.size(); ++i) {
       Barcode barcode = barcodes.get(i);
       graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode));
+      String rawBC = barcode.getRawValue().toString();
+      if(!bc.contains(rawBC)) {
+        bc.add(1,rawBC);
+        projectAdapter.notifyItemInserted(1);
+        // add sound
+      }
     }
   }
 

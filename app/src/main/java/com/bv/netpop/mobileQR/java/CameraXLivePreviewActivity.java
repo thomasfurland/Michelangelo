@@ -49,6 +49,10 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeActivityAdapter;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.common.model.LocalModel;
@@ -87,6 +91,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private String selectedModel = BARCODE_SCANNING;
   private int lensFacing = CameraSelector.LENS_FACING_BACK;
   private CameraSelector cameraSelector;
+
+  private ArrayList<String> barcodes = new ArrayList<String>(0);
+  private BarcodeActivityAdapter projectAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +165,14 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     if (!allPermissionsGranted()) {
       getRuntimePermissions();
     }
+
+    barcodes.add(0, "Read QR Codes:");
+
+    RecyclerView rvBarcodes = findViewById(R.id.BCRecyclerView);
+    projectAdapter = new BarcodeActivityAdapter(barcodes);
+    rvBarcodes.setAdapter(projectAdapter);
+    rvBarcodes.setLayoutManager(new LinearLayoutManager(this));
+
   }
 
   @Override
@@ -276,7 +291,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
       switch (selectedModel) {
         case BARCODE_SCANNING:
           Log.i(TAG, "Using Barcode Detector Processor");
-          imageProcessor = new BarcodeScannerProcessor(this);
+          imageProcessor = new BarcodeScannerProcessor(this,barcodes,projectAdapter);
           break;
         default:
           throw new IllegalStateException("Invalid model name");

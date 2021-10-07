@@ -31,8 +31,6 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.camera.core.CameraSelector;
 import com.bv.netpop.mobileQR.R;
-import java.util.Arrays;
-import java.util.List;
 
 /** Configures CameraX live preview demo settings. */
 @RequiresApi(VERSION_CODES.LOLLIPOP)
@@ -98,7 +96,7 @@ public class CameraXLivePreviewPreferenceFragment extends LivePreviewPreferenceF
       Context context, Integer lensFacing) {
     CameraManager cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
     try {
-      List<String> cameraList = Arrays.asList(cameraManager.getCameraIdList());
+      String[] cameraList = cameraManager.getCameraIdList();
       for (String availableCameraId : cameraList) {
         CameraCharacteristics availableCameraCharacteristics =
             cameraManager.getCameraCharacteristics(availableCameraId);

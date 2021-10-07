@@ -222,14 +222,6 @@ public class CameraSource {
     bytesToByteBuffer.clear();
   }
 
-  /** Changes the facing of the camera. */
-  public synchronized void setFacing(int facing) {
-    if ((facing != CAMERA_FACING_BACK) && (facing != CAMERA_FACING_FRONT)) {
-      throw new IllegalArgumentException("Invalid camera: " + facing);
-    }
-    this.facing = facing;
-  }
-
   /** Returns the preview size that is currently in use by the underlying camera. */
   public Size getPreviewSize() {
     return previewSize;
@@ -559,16 +551,6 @@ public class CameraSource {
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
       processingRunnable.setNextFrame(data, camera);
-    }
-  }
-
-  public void setMachineLearningFrameProcessor(VisionImageProcessor processor) {
-    synchronized (processorLock) {
-      cleanScreen();
-      if (frameProcessor != null) {
-        frameProcessor.stop();
-      }
-      frameProcessor = processor;
     }
   }
 

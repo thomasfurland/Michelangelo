@@ -17,7 +17,6 @@
 package com.bv.netpop.mobileQR;
 
 import android.annotation.TargetApi;
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -26,18 +25,13 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
 import android.media.Image.Plane;
-import android.net.Uri;
 import android.os.Build.VERSION_CODES;
-import android.provider.MediaStore;
 import androidx.annotation.Nullable;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.camera.core.ExperimentalGetImage;
 import androidx.camera.core.ImageProxy;
-import androidx.exifinterface.media.ExifInterface;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 /** Utils functions for bitmap conversions. */
@@ -102,77 +96,6 @@ public class BitmapUtils {
       bitmap.recycle();
     }
     return rotatedBitmap;
-  }
-
-  @Nullable
-  public static Bitmap getBitmapFromContentUri(ContentResolver contentResolver, Uri imageUri)
-      throws IOException {
-    Bitmap decodedBitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri);
-    if (decodedBitmap == null) {
-      return null;
-    }
-    int orientation = getExifOrientationTag(contentResolver, imageUri);
-
-    int rotationDegrees = 0;
-    boolean flipX = false;
-    boolean flipY = false;
-    // See e.g. https://magnushoff.com/articles/jpeg-orientation/ for a detailed explanation on each
-    // orientation.
-    switch (orientation) {
-      case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_90:
-        rotationDegrees = 90;
-        break;
-      case ExifInterface.ORIENTATION_TRANSPOSE:
-        rotationDegrees = 90;
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_180:
-        rotationDegrees = 180;
-        break;
-      case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-        flipY = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_270:
-        rotationDegrees = -90;
-        break;
-      case ExifInterface.ORIENTATION_TRANSVERSE:
-        rotationDegrees = -90;
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_UNDEFINED:
-      case ExifInterface.ORIENTATION_NORMAL:
-      default:
-        // No transformations necessary in this case.
-    }
-
-    return rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
-  }
-
-  private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
-    // We only support parsing EXIF orientation tag from local file on the device.
-    // See also:
-    // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
-    if (!ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme())
-        && !ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
-      return 0;
-    }
-
-    ExifInterface exif;
-    try (InputStream inputStream = resolver.openInputStream(imageUri)) {
-      if (inputStream == null) {
-        return 0;
-      }
-
-      exif = new ExifInterface(inputStream);
-    } catch (IOException e) {
-      Log.e(TAG, "failed to open file to read rotation meta data: " + imageUri, e);
-      return 0;
-    }
-
-    return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
   }
 
   /**

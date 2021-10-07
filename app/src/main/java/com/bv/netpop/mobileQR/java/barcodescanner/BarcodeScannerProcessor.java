@@ -18,7 +18,14 @@ package com.bv.netpop.mobileQR.java.barcodescanner;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
+import android.media.AudioAttributes;
+import android.media.SoundPool;
+import android.os.Build;
 import android.util.Log;
+
+import com.bv.netpop.mobileQR.R;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.barcode.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
@@ -38,7 +45,10 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
   private final BarcodeScanner barcodeScanner;
   private ArrayList<String> bc;
   private BarcodeActivityAdapter projectAdapter;
+  private SoundPool soundPool;
+  private int sound1;
 
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public BarcodeScannerProcessor(Context context, ArrayList<String> bc, BarcodeActivityAdapter projectAdapter) {
     super(context);
     barcodeScanner = BarcodeScanning.getClient(
@@ -48,9 +58,19 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
     this.bc = bc;
     this.projectAdapter = projectAdapter;
+
+    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build();
+
+    soundPool = new SoundPool.Builder()
+            .setMaxStreams(5)
+            .setAudioAttributes(audioAttributes)
+            .build();
+
+    sound1 = soundPool.load(context, R.raw.beep_sound,1);
   }
-
-
 
   @Override
   public void stop() {
@@ -77,6 +97,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
         bc.add(1,rawBC);
         projectAdapter.notifyItemInserted(1);
         // add sound
+        soundPool.play(sound1,1,1,0,0,1);
       }
     }
   }

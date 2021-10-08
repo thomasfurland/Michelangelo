@@ -991,7 +991,6 @@ id compatible
 id content
 id contentPanel
 id control
-id control2
 id cos
 id custom
 id customPanel
@@ -1002,7 +1001,6 @@ id decor_content_parent
 id default_activity_button
 id deltaRelative
 id dependency_ordering
-id detector
 id dialog_button
 id dimensions
 id direct
@@ -1023,7 +1021,6 @@ id end
 id expand_activities_button
 id expanded_menu
 id facing_switch
-id feature_selector
 id fillCenter
 id fillEnd
 id fillStart
@@ -1088,18 +1085,17 @@ id percent
 id performance
 id position
 id postLayout
-id preview
 id preview_view
 id progress_circular
 id progress_horizontal
 id radio
 id ratio
 id rectangles
+id reset_button
 id reverseSawtooth
 id right
 id right_icon
 id right_side
-id root
 id sawtooth
 id scanner_entry_point
 id screen
@@ -1117,7 +1113,6 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id select_dialog_listview
-id select_image_button
 id select_images_from_local
 id settings_button
 id settings_container
@@ -1126,7 +1121,6 @@ id showCustom
 id showHome
 id showTitle
 id sin
-id size_selector
 id spacer
 id spinner
 id spline
@@ -1141,9 +1135,12 @@ id standard
 id start
 id startHorizontal
 id startVertical
+id start_button
+id state_panel
 id staticLayout
 id staticPostLayout
 id stop
+id stop_button
 id submenuarrow
 id submit_area
 id tabMode
@@ -1225,11 +1222,8 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_chooser
 layout activity_settings
-layout activity_still_image
 layout activity_vision_camerax_live_preview
-layout activity_vision_cameraxsource_demo
 layout activity_vision_entry_choice
-layout activity_vision_live_preview
 layout custom_dialog
 layout item_barcode
 layout notification_action

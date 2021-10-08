@@ -46,10 +46,11 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
   private final ArrayList<String> bc;
   private final BarcodeActivityAdapter projectAdapter;
   private final SoundPool soundPool;
+  private final boolean start;
   private final int sound1;
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  public BarcodeScannerProcessor(Context context, ArrayList<String> bc, BarcodeActivityAdapter projectAdapter) {
+  public BarcodeScannerProcessor(Context context, ArrayList<String> bc, BarcodeActivityAdapter projectAdapter, boolean start) {
     super(context);
     barcodeScanner = BarcodeScanning.getClient(
             new BarcodeScannerOptions.Builder()
@@ -58,6 +59,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
     this.bc = bc;
     this.projectAdapter = projectAdapter;
+    this.start = start;
 
     AudioAttributes audioAttributes = new AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -88,6 +90,9 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
       @NonNull List<Barcode> barcodes, @NonNull GraphicOverlay graphicOverlay) {
     if (barcodes.isEmpty()) {
       Log.v(MANUAL_TESTING_LOG, "No barcode has been detected");
+    }
+    if(!start) {
+      return;
     }
     for (int i = 0; i < barcodes.size(); ++i) {
       Barcode barcode = barcodes.get(i);

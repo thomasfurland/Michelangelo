@@ -91,8 +91,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private int lensFacing = CameraSelector.LENS_FACING_BACK;
   private CameraSelector cameraSelector;
 
-  private final ArrayList<String> barcodes = new ArrayList<>(0);
+  private ArrayList<String> barcodes = new ArrayList<>(0);
   private BarcodeActivityAdapter projectAdapter;
+  private Boolean activeFlag = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
     if (savedInstanceState != null) {
       selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
+      barcodes = savedInstanceState.getStringArrayList("BarcodeArray");
+    } else {
+      barcodes.add(0, "Read QR Codes:");
     }
     cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
@@ -165,12 +169,36 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
       getRuntimePermissions();
     }
 
-    barcodes.add(0, "Read QR Codes:");
-
     RecyclerView rvBarcodes = findViewById(R.id.BCRecyclerView);
     projectAdapter = new BarcodeActivityAdapter(barcodes);
     rvBarcodes.setAdapter(projectAdapter);
     rvBarcodes.setLayoutManager(new LinearLayoutManager(this));
+
+    ImageView resetButton = findViewById(R.id.reset_button);
+    resetButton.setOnClickListener(
+            v -> {
+              int size = barcodes.size();
+              barcodes.clear();
+              barcodes.add(0,"Read QR Codes:");
+              projectAdapter.notifyItemRangeRemoved(1,size -1);
+            }
+    );
+
+    ImageView startButton = findViewById(R.id.start_button);
+    startButton.setOnClickListener(
+            v -> {
+              activeFlag = true;
+              bindAnalysisUseCase();
+            }
+    );
+
+    ImageView stopButton = findViewById(R.id.stop_button);
+    stopButton.setOnClickListener(
+            v -> {
+              activeFlag = false;
+              bindAnalysisUseCase();
+            }
+    );
 
   }
 
@@ -178,6 +206,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   protected void onSaveInstanceState(@NonNull Bundle bundle) {
     super.onSaveInstanceState(bundle);
     bundle.putString(STATE_SELECTED_MODEL, selectedModel);
+    bundle.putStringArrayList("BarcodeArray",barcodes);
   }
 
   @Override
@@ -289,7 +318,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     try {
       if (BARCODE_SCANNING.equals(selectedModel)) {
         Log.i(TAG, "Using Barcode Detector Processor");
-        imageProcessor = new BarcodeScannerProcessor(this, barcodes, projectAdapter);
+        imageProcessor = new BarcodeScannerProcessor(this, barcodes, projectAdapter, activeFlag);
       } else {
         throw new IllegalStateException("Invalid model name");
       }

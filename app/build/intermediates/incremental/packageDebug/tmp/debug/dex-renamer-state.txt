@@ -1,4 +1,4 @@
-#Fri Oct 08 14:35:29 JST 2021
+#Fri Oct 08 16:22:03 JST 2021
 base.2=/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex
 path.2=classes2.dex
 base.1=/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/dex/debug/mergeProjectDexDebug/classes.dex

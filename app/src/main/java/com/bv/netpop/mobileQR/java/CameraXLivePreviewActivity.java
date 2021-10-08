@@ -31,6 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -54,6 +56,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerActivity;
 import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeActivityAdapter;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
@@ -73,7 +76,7 @@ import java.util.List;
 public final class CameraXLivePreviewActivity extends AppCompatActivity
     implements OnRequestPermissionsResultCallback,
         OnItemSelectedListener,
-        CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener{
   private static final String TAG = "CameraXLivePreview";
   private static final int PERMISSION_REQUESTS = 1;
   private static final String BARCODE_SCANNING = "Barcode Scanning";
@@ -82,6 +85,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
   private PreviewView previewView;
   private GraphicOverlay graphicOverlay;
+  private GestureDetector gestureDetector;
 
   @Nullable private ProcessCameraProvider cameraProvider;
   @Nullable private Preview previewUseCase;
@@ -118,6 +122,12 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     } else {
       barcodes.add(0, "Read QR Codes:");
     }
+
+    ArrayList bc_list = getIntent().getStringArrayListExtra("BarcodeArray");
+    if (bc_list != null) {
+      barcodes = bc_list;
+    }
+
     cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
     setContentView(R.layout.activity_vision_camerax_live_preview);
@@ -219,7 +229,10 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               toast.show();
             }
     );
-
+    gestureDetector = new GestureDetector(this, new GestureListener());
+    previewView.setOnTouchListener(
+            (v, event) -> gestureDetector.onTouchEvent(event)
+    );
   }
 
   @Override
@@ -446,5 +459,63 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     }
     Log.i(TAG, "Permission NOT granted: " + permission);
     return false;
+  }
+
+  private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+      return true;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+      boolean result = false;
+      try {
+        float diffY = e2.getY() - e1.getY();
+        float diffX = e2.getX() - e1.getX();
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+            if (diffX > 0) {
+              onSwipeRight();
+            } else {
+              onSwipeLeft();
+            }
+            result = true;
+          }
+        }
+        else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+          if (diffY > 0) {
+            onSwipeBottom();
+          } else {
+            onSwipeTop();
+          }
+          result = true;
+        }
+      } catch (Exception exception) {
+        exception.printStackTrace();
+      }
+      return result;
+    }
+  }
+
+  public void onSwipeRight() {
+    Toast toast = Toast.makeText(this, "swipe right.", Toast.LENGTH_SHORT);
+    toast.show();
+  }
+
+  public void onSwipeLeft() {
+    Intent intent = new Intent(this, BarcodeCheckerActivity.class);
+    intent.putStringArrayListExtra("BarcodeArray",barcodes);
+    startActivity(intent);
+  }
+
+  public void onSwipeTop() {
+  }
+
+  public void onSwipeBottom() {
   }
 }

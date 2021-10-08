@@ -16,9 +16,11 @@
 
 package com.bv.netpop.mobileQR.java;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -177,10 +179,22 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     ImageView resetButton = findViewById(R.id.reset_button);
     resetButton.setOnClickListener(
             v -> {
-              int size = barcodes.size();
-              barcodes.clear();
-              barcodes.add(0,"Read QR Codes:");
-              projectAdapter.notifyItemRangeRemoved(1,size -1);
+              AlertDialog.Builder alert = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                  int size = barcodes.size();
+                  barcodes.clear();
+                  barcodes.add(0,"Read QR Codes:");
+                  projectAdapter.notifyItemRangeRemoved(1,size -1);
+                  dialog.dismiss();
+
+                  Toast toast = Toast.makeText(this, "Scan List Cleared.", Toast.LENGTH_LONG);
+                  toast.show();
+                });
+              alert.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+
+              alert.show();
             }
     );
 
@@ -189,6 +203,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
             v -> {
               activeFlag = true;
               bindAnalysisUseCase();
+
+              Toast toast = Toast.makeText(this, "Starting Scanner!", Toast.LENGTH_SHORT);
+              toast.show();
             }
     );
 
@@ -197,6 +214,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
             v -> {
               activeFlag = false;
               bindAnalysisUseCase();
+
+              Toast toast = Toast.makeText(this, "Stopping Scanner.", Toast.LENGTH_SHORT);
+              toast.show();
             }
     );
 

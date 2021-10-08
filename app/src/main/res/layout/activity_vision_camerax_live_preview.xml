@@ -22,15 +22,16 @@
       app:layout_constraintTop_toTopOf="@id/preview_view"
       app:layout_constraintBottom_toBottomOf="@id/preview_view"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/BCRecyclerView"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:background="#BEFFFFFF"
-        android:elevation="2dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/control"
-        app:layout_constraintRight_toRightOf="@+id/control" />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/BCRecyclerView"
+      android:layout_width="200dp"
+      android:layout_height="match_parent"
+      android:background="#BEFFFFFF"
+      android:elevation="2dp"
+      android:scrollbars="vertical"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="@+id/control"
+      app:layout_constraintRight_toRightOf="@+id/control" />
 
   <include
       android:id="@+id/settings_button"

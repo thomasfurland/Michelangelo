@@ -8,10 +8,10 @@ com/bv/netpop/mobileQR/FrameMetadata.java
  com.bv.netpop.mobileQR.FrameMetadata$Builder
 com/bv/netpop/mobileQR/CameraXViewModel.java
  com.bv.netpop.mobileQR.CameraXViewModel
-com/bv/netpop/mobileQR/CameraImageGraphic.java
- com.bv.netpop.mobileQR.CameraImageGraphic
 com/bv/netpop/mobileQR/java/barcodescanner/BarcodeScannerProcessor.java
  com.bv.netpop.mobileQR.java.barcodescanner.BarcodeScannerProcessor
+com/bv/netpop/mobileQR/CameraImageGraphic.java
+ com.bv.netpop.mobileQR.CameraImageGraphic
 com/bv/netpop/mobileQR/BitmapUtils.java
  com.bv.netpop.mobileQR.BitmapUtils
 com/bv/netpop/mobileQR/CameraSource.java

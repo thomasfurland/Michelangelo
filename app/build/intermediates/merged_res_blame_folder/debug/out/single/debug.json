@@ -1,138 +1,166 @@
 [
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_activity_vision_entry_choice.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/activity_vision_entry_choice.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\xml_preference_still_image.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\xml\\preference_still_image.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_switch_camera_white_48dp.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-mdpi/ic_switch_camera_white_48dp.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_switch_camera_white_48dp_inset.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxhdpi/ic_switch_camera_white_48dp_inset.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_switch_camera_white_48dp.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-mdpi\\ic_switch_camera_white_48dp.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_switch_camera_white_48dp_inset.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-hdpi/ic_switch_camera_white_48dp_inset.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_spinner_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\spinner_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_settings_white_24dp.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxhdpi/ic_settings_white_24dp.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_camera_24.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\ic_baseline_camera_24.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_settings_white_24dp.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-mdpi/ic_settings_white_24dp.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_switch_camera_white_48dp_inset.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxhdpi\\ic_switch_camera_white_48dp_inset.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/xml_preference_still_image.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/xml/preference_still_image.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_switch_camera_white_48dp.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xhdpi\\ic_switch_camera_white_48dp.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable_list_item_background.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable/list_item_background.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_settings_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\settings_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_activity_chooser.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/activity_chooser.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_chooser.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\activity_chooser.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_ic_settings_white_24dp.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxxhdpi/ic_settings_white_24dp.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_toggle_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\toggle_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_switch_camera_white_48dp.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xhdpi/ic_switch_camera_white_48dp.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_settings_white_24dp.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-hdpi\\ic_settings_white_24dp.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_activity_settings.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/activity_settings.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_settings_white_24dp.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xhdpi\\ic_settings_white_24dp.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_ic_switch_camera_white_48dp.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxxhdpi/ic_switch_camera_white_48dp.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_settings_white_24dp.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxhdpi\\ic_settings_white_24dp.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_settings_white_24dp.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xhdpi/ic_settings_white_24dp.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_switch_camera_white_48dp_inset.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xhdpi\\ic_switch_camera_white_48dp_inset.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/raw_beep_sound.wav.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/raw/beep_sound.wav"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\raw_beep_sound.wav.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\raw\\beep_sound.wav"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_switch_camera_white_48dp.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxhdpi/ic_switch_camera_white_48dp.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_settings_white_24dp.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_settings_white_24dp.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_activity_vision_camerax_live_preview.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/activity_vision_camerax_live_preview.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout-land_activity_vision_camerax_live_preview.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout-land\\activity_vision_camerax_live_preview.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logo_mlkit.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\logo_mlkit.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xxxhdpi_ic_switch_camera_white_48dp_inset.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xxxhdpi/ic_switch_camera_white_48dp_inset.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_switch_camera_white_48dp_inset.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-mdpi/ic_switch_camera_white_48dp_inset.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_delete_outline_24.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\ic_baseline_delete_outline_24.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/menu_camera_button_menu.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/menu/camera_button_menu.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_switch_camera_white_48dp.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_switch_camera_white_48dp.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/xml_preference_live_preview_quickstart.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/xml/preference_live_preview_quickstart.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_pause_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\pause_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_play_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\play_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_item_barcode.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/item_barcode.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_pause_circle_outline_24.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\ic_baseline_pause_circle_outline_24.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_switch_camera_white_48dp_inset.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-xhdpi/ic_switch_camera_white_48dp_inset.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_switch_camera_white_48dp.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxhdpi\\ic_switch_camera_white_48dp.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable_logo_mlkit.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable/logo_mlkit.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_spinner_style.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/spinner_style.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_settings.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\activity_settings.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout-land_activity_vision_camerax_live_preview.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout-land/activity_vision_camerax_live_preview.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_switch_camera_white_48dp.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-hdpi\\ic_switch_camera_white_48dp.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_toggle_style.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/toggle_style.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_switch_camera_white_48dp_inset.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_switch_camera_white_48dp_inset.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/layout_settings_style.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/layout/settings_style.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_switch_camera_white_48dp_inset.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-hdpi\\ic_switch_camera_white_48dp_inset.png"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_settings_white_24dp.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-hdpi/ic_settings_white_24dp.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_trash_style.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\trash_style.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\menu_camera_button_menu.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\menu\\camera_button_menu.xml"
     },
     {
-        "merged": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_switch_camera_white_48dp.xml.flat",
-        "source": "/Users/tommy/Documents/Android_Applications/Michelangelo/app/src/main/res/drawable-hdpi/ic_switch_camera_white_48dp.xml"
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\xml_preference_live_preview_quickstart.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\xml\\preference_live_preview_quickstart.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_list_item_background.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\list_item_background.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_item_barcode.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\item_barcode.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_vision_camerax_live_preview.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\activity_vision_camerax_live_preview.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_vision_entry_choice.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\layout\\activity_vision_entry_choice.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_play_circle_outline_24.xml.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable\\ic_baseline_play_circle_outline_24.xml"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_switch_camera_white_48dp_inset.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-mdpi\\ic_switch_camera_white_48dp_inset.png"
+    },
+    {
+        "merged": "C:\\WorkspaceAndroid\\Michelangelo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_settings_white_24dp.png.flat",
+        "source": "C:\\WorkspaceAndroid\\Michelangelo\\app\\src\\main\\res\\drawable-mdpi\\ic_settings_white_24dp.png"
     }
 ]

@@ -42,7 +42,7 @@
 
     <include
         android:id="@+id/reset_button"
-        layout="@layout/settings_style"
+        layout="@layout/trash_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -54,7 +54,7 @@
 
     <include
         android:id="@+id/start_button"
-        layout="@layout/settings_style"
+        layout="@layout/play_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -63,7 +63,7 @@
 
     <include
         android:id="@+id/stop_button"
-        layout="@layout/settings_style"
+        layout="@layout/pause_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

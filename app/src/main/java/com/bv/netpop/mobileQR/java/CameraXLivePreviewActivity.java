@@ -225,7 +225,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               activeFlag = false;
               bindAnalysisUseCase();
 
-              Toast toast = Toast.makeText(this, "Stopping Scanner.", Toast.LENGTH_SHORT);
+              Toast toast = Toast.makeText(this, "Pausing Scanner.", Toast.LENGTH_SHORT);
               toast.show();
             }
     );

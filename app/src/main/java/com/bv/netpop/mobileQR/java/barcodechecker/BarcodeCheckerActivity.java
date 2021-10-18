@@ -14,6 +14,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import com.bv.netpop.mobileQR.R;
+import com.bv.netpop.mobileQR.java.BarcodeBase;
 import com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class BarcodeCheckerActivity extends AppCompatActivity {
 
     private GestureDetector gestureDetector;
-    private ArrayList<String> barcodes = new ArrayList<>(0);
+    private ArrayList<BarcodeBase> barcodes = new ArrayList<>(0);
 
     private static final String SOAP_ACTION = "http://tempuri.org/CFG_GetClientConfig";
     private static final String OPERATION_NAME = "CFG_GetClientConfig";
@@ -36,12 +37,12 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.scanner_entry_point);
 
         if (savedInstanceState != null) {
-            barcodes = savedInstanceState.getStringArrayList("BarcodeArray");
+            barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
         } else {
-            barcodes.add(0, "Read QR Codes:");
+            barcodes.add(0, new BarcodeBase("Read QR Codes:"));
         }
 
-        ArrayList bc_list = getIntent().getStringArrayListExtra("BarcodeArray");
+        ArrayList bc_list = getIntent().getParcelableArrayListExtra("BarcodeArray");
         if (bc_list != null) {
             barcodes = bc_list;
         }
@@ -67,6 +68,7 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
             httpTransport.call(SOAP_ACTION, envelope);
             Object response = envelope.getResponse();
             String res = response.toString();
+            String stop = res;
             //do stuff.
 
         }
@@ -78,7 +80,7 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        bundle.putStringArrayList("BarcodeArray",barcodes);
+        bundle.putParcelableArrayList("BarcodeArray",barcodes);
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -124,7 +126,7 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
 
     public void onSwipeRight() {
         Intent intent = new Intent(this, CameraXLivePreviewActivity.class);
-        intent.putStringArrayListExtra("BarcodeArray",barcodes);
+        intent.putParcelableArrayListExtra("BarcodeArray",barcodes);
         startActivity(intent);
     }
 

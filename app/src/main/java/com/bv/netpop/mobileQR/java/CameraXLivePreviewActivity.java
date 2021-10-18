@@ -97,7 +97,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private int lensFacing = CameraSelector.LENS_FACING_BACK;
   private CameraSelector cameraSelector;
 
-  private ArrayList<String> barcodes = new ArrayList<>(0);
+  private ArrayList<BarcodeBase> barcodes = new ArrayList<>(0);
   private BarcodeActivityAdapter projectAdapter;
   private Boolean activeFlag = false;
 
@@ -118,12 +118,12 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
     if (savedInstanceState != null) {
       selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
-      barcodes = savedInstanceState.getStringArrayList("BarcodeArray");
+      barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
     } else {
-      barcodes.add(0, "Read QR Codes:");
+      barcodes.add(0, new BarcodeBase("Read QR Codes:"));
     }
 
-    ArrayList bc_list = getIntent().getStringArrayListExtra("BarcodeArray");
+    ArrayList bc_list = getIntent().getParcelableArrayListExtra("BarcodeArray");
     if (bc_list != null) {
       barcodes = bc_list;
     }
@@ -195,7 +195,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 .setPositiveButton("Yes", (dialog, which) -> {
                   int size = barcodes.size();
                   barcodes.clear();
-                  barcodes.add(0,"Read QR Codes:");
+                  barcodes.add(0,new BarcodeBase("Read QR Codes:"));
                   projectAdapter.notifyItemRangeRemoved(1,size -1);
                   dialog.dismiss();
 
@@ -239,7 +239,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   protected void onSaveInstanceState(@NonNull Bundle bundle) {
     super.onSaveInstanceState(bundle);
     bundle.putString(STATE_SELECTED_MODEL, selectedModel);
-    bundle.putStringArrayList("BarcodeArray",barcodes);
+    bundle.putParcelableArrayList("BarcodeArray",barcodes);
   }
 
   @Override
@@ -509,7 +509,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
   public void onSwipeLeft() {
     Intent intent = new Intent(this, BarcodeCheckerActivity.class);
-    intent.putStringArrayListExtra("BarcodeArray",barcodes);
+    intent.putParcelableArrayListExtra("BarcodeArray",barcodes);
     startActivity(intent);
   }
 

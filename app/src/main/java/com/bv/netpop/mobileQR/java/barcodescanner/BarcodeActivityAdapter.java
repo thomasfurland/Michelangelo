@@ -9,11 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bv.netpop.mobileQR.R;
+import com.bv.netpop.mobileQR.java.BarcodeBase;
+
 import java.util.List;
 
 public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivityAdapter.ViewHolder> {
 
-    List<String> mBarcodes;
+    List<BarcodeBase> mBarcodes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bcTextView;
@@ -23,7 +25,7 @@ public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivity
         }
     }
 
-    public BarcodeActivityAdapter(List<String> mBarcodes) {
+    public BarcodeActivityAdapter(List<BarcodeBase> mBarcodes) {
         super();
         this.mBarcodes = mBarcodes;
     }
@@ -39,9 +41,9 @@ public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivity
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String barcode = mBarcodes.get(position);
+        BarcodeBase barcode = mBarcodes.get(position);
         TextView tv = holder.bcTextView;
-        tv.setText(barcode);
+        tv.setText(barcode.rawValue);
     }
 
     @Override

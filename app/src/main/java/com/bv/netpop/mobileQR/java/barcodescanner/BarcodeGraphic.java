@@ -23,6 +23,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+
+import com.bv.netpop.mobileQR.java.BarcodeBase;
 import com.google.mlkit.vision.barcode.Barcode;
 import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.GraphicOverlay.Graphic;
@@ -35,11 +37,13 @@ public class BarcodeGraphic extends Graphic {
 
   private final Paint rectPaint;
   private final Barcode barcode;
+  private final BarcodeBase barcodeData;
 
-  BarcodeGraphic(GraphicOverlay overlay, Barcode barcode) {
+  BarcodeGraphic(GraphicOverlay overlay, Barcode barcode, BarcodeBase barcodeData) {
     super(overlay);
 
     this.barcode = barcode;
+    this.barcodeData = barcodeData;
 
     rectPaint = new Paint();
     rectPaint.setColor(MARKER_COLOR);
@@ -64,6 +68,17 @@ public class BarcodeGraphic extends Graphic {
     rect.right = max(x0, x1);
     rect.top = translateY(rect.top);
     rect.bottom = translateY(rect.bottom);
+
+    switch (barcodeData.barcodeStatus) {
+      case Correct:
+        rectPaint.setColor(Color.GREEN);
+        break;
+      case Incorrect:
+        rectPaint.setColor(Color.RED);
+        break;
+      default:
+        break;
+    }
     canvas.drawRect(rect, rectPaint);
   }
 }

@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpTransportSE;
 
 import com.bv.netpop.mobileQR.R;
 import com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity;
@@ -18,6 +22,11 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
 
     private GestureDetector gestureDetector;
     private ArrayList<String> barcodes = new ArrayList<>(0);
+
+    private static final String SOAP_ACTION = "http://tempuri.org/CFG_GetClientConfig";
+    private static final String OPERATION_NAME = "CFG_GetClientConfig";
+    private static final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
+    private static final String SOAP_ADDRESS = "http://104.214.148.221/urinaviSysWS/UriNaviWS.asmx";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,25 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
         // add gridview of barcode objects, add verify button, add make corrected genko button
         //overlay correct barcodes with green border and incorrect border with red
 
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+        request.addProperty("ClientID","manabe");
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
+
+        try
+        {
+            httpTransport.call(SOAP_ACTION, envelope);
+            Object response = envelope.getResponse();
+            String res = response.toString();
+            //do stuff.
+
+        }
+        catch (Exception exception) {
+            String log = exception.getMessage();
+        }
     }
 
     @Override

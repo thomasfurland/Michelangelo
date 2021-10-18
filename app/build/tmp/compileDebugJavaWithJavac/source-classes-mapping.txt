@@ -8,10 +8,11 @@ com/bv/netpop/mobileQR/FrameMetadata.java
  com.bv.netpop.mobileQR.FrameMetadata$Builder
 com/bv/netpop/mobileQR/CameraXViewModel.java
  com.bv.netpop.mobileQR.CameraXViewModel
-com/bv/netpop/mobileQR/java/barcodescanner/BarcodeScannerProcessor.java
- com.bv.netpop.mobileQR.java.barcodescanner.BarcodeScannerProcessor
 com/bv/netpop/mobileQR/CameraImageGraphic.java
  com.bv.netpop.mobileQR.CameraImageGraphic
+com/bv/netpop/mobileQR/java/ChooserActivity.java
+ com.bv.netpop.mobileQR.java.ChooserActivity
+ com.bv.netpop.mobileQR.java.ChooserActivity$MyArrayAdapter
 com/bv/netpop/mobileQR/BitmapUtils.java
  com.bv.netpop.mobileQR.BitmapUtils
 com/bv/netpop/mobileQR/CameraSource.java
@@ -52,13 +53,12 @@ com/bv/netpop/mobileQR/CameraSourcePreview.java
  com.bv.netpop.mobileQR.CameraSourcePreview
  com.bv.netpop.mobileQR.CameraSourcePreview$1
  com.bv.netpop.mobileQR.CameraSourcePreview$SurfaceCallback
+com/bv/netpop/mobileQR/java/barcodescanner/BarcodeScannerProcessor.java
+ com.bv.netpop.mobileQR.java.barcodescanner.BarcodeScannerProcessor
 com/bv/netpop/mobileQR/java/CameraXLivePreviewActivity.java
  com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity
  com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity$1
  com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity$GestureListener
-com/bv/netpop/mobileQR/java/ChooserActivity.java
- com.bv.netpop.mobileQR.java.ChooserActivity
- com.bv.netpop.mobileQR.java.ChooserActivity$MyArrayAdapter
 com/bv/netpop/mobileQR/java/barcodechecker/BarcodeCheckerActivity.java
  com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerActivity
  com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerActivity$1

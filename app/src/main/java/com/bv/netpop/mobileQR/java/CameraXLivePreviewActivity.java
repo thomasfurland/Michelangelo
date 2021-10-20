@@ -132,6 +132,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
       for (BarcodeBase bc : bc_list) {
         POPQRBarcode qrBC = new POPQRBarcode(bc.rawValue);
         qrBC.barcodeStatus = bc.barcodeStatus;
+        qrBC.errorComment = bc.errorComment;
+        qrBC.errorType = bc.errorType;
         barcodes.add(qrBC);
       }
     }

@@ -1,12 +1,18 @@
 package com.bv.netpop.mobileQR.java.barcodechecker;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +50,7 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
         setContentView(R.layout.barcode_check_menu);
         View tv = findViewById(R.id.priceCheckActivity);
         View cv = findViewById(R.id.barcodeCheckerRecyclerView);
+        Button btn = findViewById(R.id.send_button);
 
         if (savedInstanceState != null) {
             barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
@@ -59,6 +66,8 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
             for (BarcodeBase bc : bc_list) {
                 POPQRBarcode qrBC = new POPQRBarcode(bc.rawValue);
                 qrBC.barcodeStatus = bc.barcodeStatus;
+                qrBC.errorComment = bc.errorComment;
+                qrBC.errorType = bc.errorType;
                 barcodes.add(qrBC);
             }
         }
@@ -70,18 +79,44 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
         cv.setOnTouchListener(
                 (v, event) -> gestureDetector.onTouchEvent(event)
         );
+        btn.setOnClickListener(
+                v -> {
+                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+                    dlgAlert.setMessage("POP要求印刷リストを売技ナビへ出力します。");
+                    dlgAlert.setTitle("POP要求印刷リスト出力");
+                    dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "出力完了", Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    });
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.create().show();
+                }
+        );
 
         RecyclerView rvBarcodeChecks = findViewById(R.id.barcodeCheckerRecyclerView);
         checkerAdapter = new BarcodeCheckerAdapter(barcodes);
         rvBarcodeChecks.setAdapter(checkerAdapter);
         rvBarcodeChecks.setLayoutManager(new LinearLayoutManager(this));
 
-        // add gridview of barcode objects, add verify button, add make corrected genko button
-        //overlay correct barcodes with green border and incorrect border with red
+        String sSQL = "select * from TB_STDMAST where F1 in (%s)";
+        String jan_codes = "";
+        for (POPQRBarcode bc: barcodes) {
+            if (bc.rawValue.equals("Read QR Codes:")) continue;
+            if (bc.barcodeStatus == BarcodeBase.status.Correct || bc.barcodeStatus == BarcodeBase.status.Incorrect) continue;
+                jan_codes = jan_codes.concat("'");
+                jan_codes = jan_codes.concat(bc.getParsedValue().get("JAN"));
+                jan_codes = jan_codes.concat("', ");
+        }
+        if (jan_codes.equals("")) return;
+        jan_codes = (String) jan_codes.subSequence(0, jan_codes.length() - 2);
+        sSQL = String.format(sSQL, jan_codes);
 
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
         request.addProperty("ClientID","demo");
-        request.addProperty("sSQL", "select top 5 * from TB_STDMAST");
+        request.addProperty("sSQL", sSQL);
         request.addProperty("TableName", "TB_STDMAST");
 
 
@@ -93,20 +128,29 @@ public class BarcodeCheckerActivity extends AppCompatActivity {
         try
         {
             httpTransport.call(SOAP_ACTION, envelope);
-            Object response = envelope.getResponse();
-            String res = response.toString();
-            String stop = res;
-            //do stuff.
+            SoapObject response = (SoapObject) envelope.getResponse();
+            UrinaviMasterTable master = new UrinaviMasterTable(response);
 
-            POPQRBarcode bc = barcodes.get(1);
-            bc.barcodeStatus = BarcodeBase.status.Correct;
-            barcodes.set(1,bc);
-
-            POPQRBarcode bc2 = barcodes.get(2);
-            bc2.barcodeStatus = BarcodeBase.status.Incorrect;
-            bc2.errorType = "123";
-            bc2.errorComment = "売価ミス";
-            barcodes.set(2,bc2);
+            for (POPQRBarcode bc: barcodes) {
+                if (bc.rawValue.equals("Read QR Codes:")) continue;
+                if (bc.barcodeStatus == BarcodeBase.status.Correct || bc.barcodeStatus == BarcodeBase.status.Incorrect) continue;
+                String janCode = bc.getParsedValue().get("JAN");
+                if (master.Match(janCode)) {
+                    String correctPrice = master.GetPrice(janCode);
+                    if (correctPrice.equals(bc.getParsedValue().get("POP売価"))) {
+                        bc.barcodeStatus = BarcodeBase.status.Correct;
+                    } else {
+                        bc.barcodeStatus = BarcodeBase.status.Incorrect;
+                        bc.errorType = correctPrice;
+                        bc.errorComment = "売価ミス";
+                    }
+                }
+                else {
+                    bc.barcodeStatus = BarcodeBase.status.Incorrect;
+                    bc.errorType = "N/A";
+                    bc.errorComment = "POP違い";
+                }
+            }
 
         }
         catch (Exception exception) {

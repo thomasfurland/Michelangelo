@@ -24,7 +24,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.bv.netpop.mobileQR.java.BarcodeBase;
+import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
 import com.google.mlkit.vision.barcode.Barcode;
 import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.GraphicOverlay.Graphic;

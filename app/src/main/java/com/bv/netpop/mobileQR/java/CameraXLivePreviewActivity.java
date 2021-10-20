@@ -20,7 +20,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -57,6 +56,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerActivity;
+import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
+import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
 import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeActivityAdapter;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
@@ -97,7 +98,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private int lensFacing = CameraSelector.LENS_FACING_BACK;
   private CameraSelector cameraSelector;
 
-  private ArrayList<BarcodeBase> barcodes = new ArrayList<>(0);
+  private ArrayList<POPQRBarcode> barcodes = new ArrayList<>(0);
   private BarcodeActivityAdapter projectAdapter;
   private Boolean activeFlag = false;
 
@@ -118,14 +119,21 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
     if (savedInstanceState != null) {
       selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
-      barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
+      //barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
+      activeFlag = savedInstanceState.getBoolean("ActiveFlag");
     } else {
-      barcodes.add(0, new BarcodeBase("Read QR Codes:"));
+      barcodes.add(0, new POPQRBarcode("Read QR Codes:"));
     }
 
-    ArrayList bc_list = getIntent().getParcelableArrayListExtra("BarcodeArray");
+    ArrayList<BarcodeBase> bc_list = getIntent().getParcelableArrayListExtra("BarcodeArray");
+    activeFlag = getIntent().getBooleanExtra("ActiveFlag", false);
     if (bc_list != null) {
-      barcodes = bc_list;
+      barcodes = new ArrayList<>(0);
+      for (BarcodeBase bc : bc_list) {
+        POPQRBarcode qrBC = new POPQRBarcode(bc.rawValue);
+        qrBC.barcodeStatus = bc.barcodeStatus;
+        barcodes.add(qrBC);
+      }
     }
 
     cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
@@ -195,7 +203,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 .setPositiveButton("Yes", (dialog, which) -> {
                   int size = barcodes.size();
                   barcodes.clear();
-                  barcodes.add(0,new BarcodeBase("Read QR Codes:"));
+                  barcodes.add(0,new POPQRBarcode("Read QR Codes:"));
                   projectAdapter.notifyItemRangeRemoved(1,size -1);
                   dialog.dismiss();
 
@@ -240,6 +248,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     super.onSaveInstanceState(bundle);
     bundle.putString(STATE_SELECTED_MODEL, selectedModel);
     bundle.putParcelableArrayList("BarcodeArray",barcodes);
+    bundle.putBoolean("ActiveFlag",activeFlag);
   }
 
   @Override
@@ -510,6 +519,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   public void onSwipeLeft() {
     Intent intent = new Intent(this, BarcodeCheckerActivity.class);
     intent.putParcelableArrayListExtra("BarcodeArray",barcodes);
+    intent.putExtra("ActiveFlag",activeFlag);
     startActivity(intent);
   }
 

@@ -1,18 +1,24 @@
-package com.bv.netpop.mobileQR.java;
+package com.bv.netpop.mobileQR.java.barcodes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.time.LocalDateTime;
-import java.util.Dictionary;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BarcodeBase implements Parcelable {
-    public String rawValue = "";
-    public Map<String,String> parsedValue;
+    public String rawValue;
+    private Map<String,String> _parsedValue;
 
-    public Boolean isValid = null;
+    public Map<String, String> getParsedValue() {
+        if (_parsedValue == null) {
+            _parsedValue = this.setParsedValue(rawValue);
+        }
+        return _parsedValue;
+    }
     public LocalDateTime scannedTime;
     public String errorType = "";
     public String errorComment = "";
@@ -20,17 +26,28 @@ public class BarcodeBase implements Parcelable {
 
     public BarcodeBase(String value) {
         this.rawValue = value;
-        this.parsedValue = this.setParsedValue(value);
-        this.isValid = this.validateValue(value);
     }
 
+    public static Boolean QRMatch(String value) {
+
+        List<String> sections = Arrays.asList(value.split("\\+"));
+
+        if (!(sections.size() == 9)) {
+            return false;
+        }
+
+        if (!sections.get(0).equals("PCHK")) {
+            return false;
+        }
+
+        return true;
+    }
 
     protected BarcodeBase(Parcel in) {
         rawValue = in.readString();
-        byte tmpIsValid = in.readByte();
-        isValid = tmpIsValid == 0 ? null : tmpIsValid == 1;
         errorType = in.readString();
         errorComment = in.readString();
+        barcodeStatus = status.valueOf(in.readString());
     }
 
     public static final Creator<BarcodeBase> CREATOR = new Creator<BarcodeBase>() {
@@ -45,12 +62,8 @@ public class BarcodeBase implements Parcelable {
         }
     };
 
-    protected Boolean validateValue(String value) {
-        return true;
-    }
-
     protected Map<String,String> setParsedValue(String value) {
-        Map<String,String> newParsedValue =new HashMap<String,String>();
+        Map<String,String> newParsedValue = new HashMap<>();
 
         newParsedValue.put("default",value);
 
@@ -65,9 +78,9 @@ public class BarcodeBase implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(rawValue);
-        dest.writeByte((byte) (isValid == null ? 0 : isValid ? 1 : 2));
         dest.writeString(errorType);
         dest.writeString(errorComment);
+        dest.writeString(barcodeStatus.toString());
     }
 
     public enum status {

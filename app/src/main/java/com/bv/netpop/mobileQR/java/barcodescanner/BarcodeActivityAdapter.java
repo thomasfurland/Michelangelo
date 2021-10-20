@@ -9,13 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bv.netpop.mobileQR.R;
-import com.bv.netpop.mobileQR.java.BarcodeBase;
+import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
+import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
 
 import java.util.List;
 
 public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivityAdapter.ViewHolder> {
 
-    List<BarcodeBase> mBarcodes;
+    List<POPQRBarcode> mBarcodes;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bcTextView;
@@ -25,7 +26,7 @@ public class BarcodeActivityAdapter extends RecyclerView.Adapter<BarcodeActivity
         }
     }
 
-    public BarcodeActivityAdapter(List<BarcodeBase> mBarcodes) {
+    public BarcodeActivityAdapter(List<POPQRBarcode> mBarcodes) {
         super();
         this.mBarcodes = mBarcodes;
     }

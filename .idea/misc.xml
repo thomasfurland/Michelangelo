@@ -4,6 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.23854166666666668" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/drawable/ic_baseline_print_24.xml" value="0.35625" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.21822916666666667" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24_selected.xml" value="0.21822916666666667" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/activity_vision_camerax_live_preview.xml" value="0.5" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/barcode_check_menu.xml" value="0.25" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/correct_style.xml" value="0.3365036231884058" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/item_barcode.xml" value="0.20208333333333334" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/item_barcode_status.xml" value="0.3365036231884058" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/pause_style.xml" value="0.1" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/play_style.xml" value="0.11865942028985507" />
+        <entry key="..\:/WorkspaceAndroid/Michelangelo/app/src/main/res/layout/scan_style.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/drawable/check_style.xml" value="0.2484375" />
         <entry key="app/src/main/res/drawable/ic_baseline_camera_24.xml" value="0.2484375" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2484375" />

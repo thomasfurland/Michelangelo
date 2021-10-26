@@ -26,6 +26,8 @@ import android.os.Build;
 import android.util.Log;
 
 import com.bv.netpop.mobileQR.R;
+import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeChecker;
+import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerAdapter;
 import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
 import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,7 @@ import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.java.VisionProcessorBase;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,13 +50,13 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
   private static final String TAG = "BarcodeProcessor";
   private final BarcodeScanner barcodeScanner;
   private final ArrayList<POPQRBarcode> bc;
-  private final BarcodeActivityAdapter projectAdapter;
+  private final BarcodeCheckerAdapter projectAdapter;
   private final SoundPool soundPool;
   private final boolean start;
   private final int sound1;
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  public BarcodeScannerProcessor(Context context, ArrayList<POPQRBarcode> bc, BarcodeActivityAdapter projectAdapter, boolean start) {
+  public BarcodeScannerProcessor(Context context, ArrayList<POPQRBarcode> bc, BarcodeCheckerAdapter projectAdapter, boolean start) {
     super(context);
     barcodeScanner = BarcodeScanning.getClient(
             new BarcodeScannerOptions.Builder()
@@ -98,6 +101,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     if(!start) {
       return;
     }
+    Boolean changes = false;
     for (int i = 0; i < barcodes.size(); ++i) {
       Barcode barcode = barcodes.get(i);
       String rawBC = barcode.getRawValue();
@@ -112,12 +116,32 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
         soundPool.play(sound1,1,1,0,0,1);
         graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode, objBarcode));
+
+        //send request to server with callback
+        BarcodeChecker bcc = new BarcodeChecker();
+        bcc.checkBarcode(bc);
+        projectAdapter.notifyItemChanged(1);
+
+        bc.sort((o1, o2) -> {
+          if(o1.rawValue == "Read QR Codes:" || o2.rawValue == "Read QR Codes:") return 0;
+
+          if (o1.barcodeStatus == o2.barcodeStatus) {
+            return 0;
+          } else if (o1.barcodeStatus == BarcodeBase.status.Incorrect) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
+        changes = true;
+
       } else {
         POPQRBarcode existingBarcode = bc.stream().filter(x -> x.rawValue.equals(rawBC)).collect(Collectors.toList()).get(0);
         graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode, existingBarcode));
       }
-
     }
+    if (changes) projectAdapter.notifyDataSetChanged();
   }
 
   @Override

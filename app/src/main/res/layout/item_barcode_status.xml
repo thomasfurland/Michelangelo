@@ -5,11 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
     android:visibility="visible"
-    android:weightSum="7"
+    android:weightSum="8"
     tools:visibility="visible">
+
+    <CheckBox
+        android:id="@+id/sendCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checked="true"
+        android:clickable="true" />
 
     <TextView
         android:id="@+id/jan_code"
@@ -73,14 +81,12 @@
         android:id="@+id/correct_price"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-         />
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/check_comment"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-         />
+        android:layout_weight="1" />
 
 </LinearLayout>

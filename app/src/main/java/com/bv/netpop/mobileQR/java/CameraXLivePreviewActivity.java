@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -55,10 +57,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerActivity;
+import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerAdapter;
 import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
 import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
-import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeActivityAdapter;
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
 import com.bv.netpop.mobileQR.CameraXViewModel;
@@ -75,9 +76,7 @@ import java.util.List;
 @KeepName
 @RequiresApi(VERSION_CODES.LOLLIPOP)
 public final class CameraXLivePreviewActivity extends AppCompatActivity
-    implements OnRequestPermissionsResultCallback,
-        OnItemSelectedListener,
-        CompoundButton.OnCheckedChangeListener{
+    implements OnRequestPermissionsResultCallback{
   private static final String TAG = "CameraXLivePreview";
   private static final int PERMISSION_REQUESTS = 1;
   private static final String BARCODE_SCANNING = "Barcode Scanning";
@@ -86,7 +85,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
   private PreviewView previewView;
   private GraphicOverlay graphicOverlay;
-  private GestureDetector gestureDetector;
 
   @Nullable private ProcessCameraProvider cameraProvider;
   @Nullable private Preview previewUseCase;
@@ -99,7 +97,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private CameraSelector cameraSelector;
 
   private ArrayList<POPQRBarcode> barcodes = new ArrayList<>(0);
-  private BarcodeActivityAdapter projectAdapter;
+  private BarcodeCheckerAdapter checkerAdapter;
   private Boolean activeFlag = false;
 
   @Override
@@ -119,7 +117,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
     if (savedInstanceState != null) {
       selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
-      //barcodes = savedInstanceState.getParcelableArrayList("BarcodeArray");
       activeFlag = savedInstanceState.getBoolean("ActiveFlag");
     } else {
       barcodes.add(0, new POPQRBarcode("Read QR Codes:"));
@@ -150,20 +147,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
       Log.d(TAG, "graphicOverlay is null");
     }
 
-    Spinner spinner = findViewById(R.id.spinner);
-    List<String> options = new ArrayList<>();
-    options.add(BARCODE_SCANNING);
-
-    // Creating adapter for spinner
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // attaching data adapter to spinner
-    spinner.setAdapter(dataAdapter);
-    spinner.setOnItemSelectedListener(this);
-
-    ToggleButton facingSwitch = findViewById(R.id.facing_switch);
-    facingSwitch.setOnCheckedChangeListener(this);
+    RecyclerView rvBarcodeChecks = findViewById(R.id.barcode_check_menu)
+            .findViewById(R.id.barcodeCheckerRecyclerView);
+    checkerAdapter = new BarcodeCheckerAdapter(barcodes);
+    rvBarcodeChecks.setAdapter(checkerAdapter);
+    rvBarcodeChecks.setLayoutManager(new LinearLayoutManager(this));
 
     new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
         .get(CameraXViewModel.class)
@@ -177,24 +165,27 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               }
             });
 
-    ImageView settingsButton = findViewById(R.id.settings_button);
-    settingsButton.setOnClickListener(
-        v -> {
-          Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-          intent.putExtra(
-              SettingsActivity.EXTRA_LAUNCH_SOURCE,
-              SettingsActivity.LaunchSource.CAMERAX_LIVE_PREVIEW);
-          startActivity(intent);
-        });
-
     if (!allPermissionsGranted()) {
       getRuntimePermissions();
     }
 
-    RecyclerView rvBarcodes = findViewById(R.id.BCRecyclerView);
-    projectAdapter = new BarcodeActivityAdapter(barcodes);
-    rvBarcodes.setAdapter(projectAdapter);
-    rvBarcodes.setLayoutManager(new LinearLayoutManager(this));
+    ImageView sendButton = findViewById(R.id.send_button);
+    sendButton.setOnClickListener(
+            v -> {
+              AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+              dlgAlert.setMessage("POP要求印刷リストを売技ナビへ出力します。");
+              dlgAlert.setTitle("POP要求印刷リスト出力");
+              dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                  Toast toast = Toast.makeText(getApplicationContext(), "出力完了", Toast.LENGTH_LONG);
+                  toast.show();
+                }
+              });
+              dlgAlert.setCancelable(true);
+              dlgAlert.create().show();
+            }
+    );
 
     ImageView resetButton = findViewById(R.id.reset_button);
     resetButton.setOnClickListener(
@@ -206,7 +197,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                   int size = barcodes.size();
                   barcodes.clear();
                   barcodes.add(0,new POPQRBarcode("Read QR Codes:"));
-                  projectAdapter.notifyItemRangeRemoved(1,size -1);
+                  checkerAdapter.notifyItemRangeRemoved(1,size-1);
                   dialog.dismiss();
 
                   Toast toast = Toast.makeText(this, "Scan List Cleared.", Toast.LENGTH_LONG);
@@ -219,6 +210,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     );
 
     ImageView startButton = findViewById(R.id.start_button);
+    ImageView stopButton = findViewById(R.id.stop_button);
+
+
     startButton.setOnClickListener(
             v -> {
               activeFlag = true;
@@ -226,10 +220,13 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
               Toast toast = Toast.makeText(this, "Starting Scanner!", Toast.LENGTH_SHORT);
               toast.show();
+
+              stopButton.setVisibility(View.VISIBLE);
+              startButton.setVisibility(View.GONE);
             }
     );
 
-    ImageView stopButton = findViewById(R.id.stop_button);
+
     stopButton.setOnClickListener(
             v -> {
               activeFlag = false;
@@ -237,11 +234,10 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
               Toast toast = Toast.makeText(this, "Pausing Scanner.", Toast.LENGTH_SHORT);
               toast.show();
+
+              stopButton.setVisibility(View.GONE);
+              startButton.setVisibility(View.VISIBLE);
             }
-    );
-    gestureDetector = new GestureDetector(this, new GestureListener());
-    previewView.setOnTouchListener(
-            (v, event) -> gestureDetector.onTouchEvent(event)
     );
   }
 
@@ -251,49 +247,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     bundle.putString(STATE_SELECTED_MODEL, selectedModel);
     bundle.putParcelableArrayList("BarcodeArray",barcodes);
     bundle.putBoolean("ActiveFlag",activeFlag);
-  }
-
-  @Override
-  public synchronized void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-    // An item was selected. You can retrieve the selected item using
-    // parent.getItemAtPosition(pos)
-    selectedModel = parent.getItemAtPosition(pos).toString();
-    Log.d(TAG, "Selected model: " + selectedModel);
-    bindAnalysisUseCase();
-  }
-
-  @Override
-  public void onNothingSelected(AdapterView<?> parent) {
-    // Do nothing.
-  }
-
-  @Override
-  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    if (cameraProvider == null) {
-      return;
-    }
-    int newLensFacing =
-        lensFacing == CameraSelector.LENS_FACING_FRONT
-            ? CameraSelector.LENS_FACING_BACK
-            : CameraSelector.LENS_FACING_FRONT;
-    CameraSelector newCameraSelector =
-        new CameraSelector.Builder().requireLensFacing(newLensFacing).build();
-    try {
-      if (cameraProvider.hasCamera(newCameraSelector)) {
-        Log.d(TAG, "Set facing to " + newLensFacing);
-        lensFacing = newLensFacing;
-        cameraSelector = newCameraSelector;
-        bindAllCameraUseCases();
-        return;
-      }
-    } catch (CameraInfoUnavailableException e) {
-      // Falls through
-    }
-    Toast.makeText(
-            getApplicationContext(),
-            "This device does not have lens with facing: " + newLensFacing,
-            Toast.LENGTH_SHORT)
-        .show();
   }
 
   @Override
@@ -362,7 +315,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     try {
       if (BARCODE_SCANNING.equals(selectedModel)) {
         Log.i(TAG, "Using Barcode Detector Processor");
-        imageProcessor = new BarcodeScannerProcessor(this, barcodes, projectAdapter, activeFlag);
+        imageProcessor = new BarcodeScannerProcessor(this, barcodes, checkerAdapter, activeFlag);
       } else {
         throw new IllegalStateException("Invalid model name");
       }
@@ -470,64 +423,5 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     }
     Log.i(TAG, "Permission NOT granted: " + permission);
     return false;
-  }
-
-  private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-    private static final int SWIPE_THRESHOLD = 100;
-    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-      return true;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-      boolean result = false;
-      try {
-        float diffY = e2.getY() - e1.getY();
-        float diffX = e2.getX() - e1.getX();
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-          if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-            if (diffX > 0) {
-              onSwipeRight();
-            } else {
-              onSwipeLeft();
-            }
-            result = true;
-          }
-        }
-        else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-          if (diffY > 0) {
-            onSwipeBottom();
-          } else {
-            onSwipeTop();
-          }
-          result = true;
-        }
-      } catch (Exception exception) {
-        exception.printStackTrace();
-      }
-      return result;
-    }
-  }
-
-  public void onSwipeRight() {
-    Toast toast = Toast.makeText(this, "swipe right.", Toast.LENGTH_SHORT);
-    toast.show();
-  }
-
-  public void onSwipeLeft() {
-    Intent intent = new Intent(this, BarcodeCheckerActivity.class);
-    intent.putParcelableArrayListExtra("BarcodeArray",barcodes);
-    intent.putExtra("ActiveFlag",activeFlag);
-    startActivity(intent);
-  }
-
-  public void onSwipeTop() {
-  }
-
-  public void onSwipeBottom() {
   }
 }

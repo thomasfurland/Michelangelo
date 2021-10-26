@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
         ImageView bcCorrectImage;
         ImageView bcIncorrectImage;
         ProgressBar bcPendingBar;
+        CheckBox bcCheckBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +44,9 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
             bcCorrectImage = itemView.findViewById(R.id.correctImage);
             bcIncorrectImage = itemView.findViewById(R.id.incorrectImage);
             bcPendingBar = itemView.findViewById(R.id.progressBarPending);
+
+            bcCheckBox = itemView.findViewById(R.id.sendCheckBox);
+
         }
     }
 
@@ -65,6 +70,8 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
         holder.bcIncorrectImage.setVisibility(View.GONE);
         holder.bcPendingBar.setVisibility(View.GONE);
         holder.bcStatusTextView.setVisibility(View.GONE);
+
+        holder.bcCheckBox.setVisibility(View.INVISIBLE);
 
         POPQRBarcode barcode = mBarcodes.get(position);
 
@@ -92,6 +99,8 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
                 break;
             case Incorrect:
                 holder.bcIncorrectImage.setVisibility(View.VISIBLE);
+                holder.bcCheckBox.setVisibility(View.VISIBLE);
+
                 holder.bcTextView.get(4).setText(barcode.errorType);
                 holder.bcTextView.get(5).setText(barcode.errorComment);
                 break;

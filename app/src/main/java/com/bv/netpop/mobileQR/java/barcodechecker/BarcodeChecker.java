@@ -1,97 +1,168 @@
 package com.bv.netpop.mobileQR.java.barcodechecker;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.os.Build;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.RequiresApi;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import com.bv.netpop.mobileQR.R;
 import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
-import com.bv.netpop.mobileQR.java.CameraXLivePreviewActivity;
 import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class BarcodeChecker  {
 
-    private static final String SOAP_ACTION = "http://tempuri.org/SQL_ExecuteSQLAdapter";
-    private static final String OPERATION_NAME = "SQL_ExecuteSQLAdapter";
     private static final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
     private static final String SOAP_ADDRESS = "http://104.214.148.221/urinaviSysWS/UriNaviWS.asmx";
 
-    public void checkBarcode(ArrayList<POPQRBarcode> barcodes) {
+    public void checkBarcode(POPQRBarcode bc) {
+        String sSQL = "select * from TB_STDMAST where F1 = '%s'";
+        String janCode = bc.getParsedValue().get("JAN");
+        sSQL = String.format(sSQL, janCode);
 
-        String sSQL = "select * from TB_STDMAST where F1 in (%s)";
-        String jan_codes = "";
-        for (POPQRBarcode bc: barcodes) {
-            if (bc.rawValue.equals("Read QR Codes:")) continue;
-            if (bc.barcodeStatus == BarcodeBase.status.Correct || bc.barcodeStatus == BarcodeBase.status.Incorrect) continue;
+        SoapObject response = this.SQL_ExecuteSQLAdapterRequest("Demo","TB_STDMAST",sSQL);
+        UrinaviMasterTable master = new UrinaviMasterTable(response);
 
-            jan_codes = jan_codes.concat("'");
-            jan_codes = jan_codes.concat(bc.getParsedValue().get("JAN"));
-            jan_codes = jan_codes.concat("', ");
+        if (master.ContainsItem(janCode)) {
+            bc.setItemName(master.GetItemName(janCode));
+            String correctPrice = master.GetPrice(janCode);
+            if (correctPrice.equals(bc.getParsedValue().get("POP売価"))) {
+                bc.barcodeStatus = BarcodeBase.status.Correct;
+            } else {
+                bc.barcodeStatus = BarcodeBase.status.Incorrect;
+                bc.errorType = correctPrice;
+                bc.errorComment = "売価ミス";
+            }
         }
-        if (jan_codes.equals("")) return;
-        jan_codes = (String) jan_codes.subSequence(0, jan_codes.length() - 2);
-        sSQL = String.format(sSQL, jan_codes);
+        else {
+            bc.barcodeStatus = BarcodeBase.status.Incorrect;
+            bc.errorType = "N/A";
+            bc.errorComment = "JAN違い";
+        }
+    }
+
+    public void CheckTemplateFolderName(POPQRBarcode bc) {
+        String sSQL = "select * from TB_FOLDER_TEMPLATE where TemplateFolderID = '%s'";
+        String templateFolderID = bc.getParsedValue().get("POP種類");
+        if(templateFolderID.equals("")) templateFolderID = "1";
+        sSQL = String.format(sSQL, templateFolderID);
+
+        SoapObject response = this.SQL_ExecuteSQLAdapterRequest("Demo","TB_FOLDER_TEMPLATE",sSQL);
+        UrinaviTemplateFolderTable folderTable = new UrinaviTemplateFolderTable(response);
+
+        if (folderTable.ContainsItem(templateFolderID)) {
+            bc.setPOPType(folderTable.GetName(templateFolderID));
+            String correctType = folderTable.GetFolderID(templateFolderID);
+            if (correctType.equals(templateFolderID)) {
+                bc.barcodeStatus = BarcodeBase.status.Correct;
+                return;
+            }
+        }
+
+        bc.barcodeStatus = BarcodeBase.status.Incorrect;
+        bc.errorComment = "POP違い";
+
+    }
+
+    public void SendReprintItems(ArrayList<POPQRBarcode> bc) {
+
+        String folderPath = "E:\\inetpub\\ftproot\\demo";
+        String fileName = this.getFileName();
+        String data = this.encodeItemCodes(bc);
+        Boolean overWrite = true;
+
+        SoapObject response = this.FTP_UpLoadFileRequest("Demo",folderPath,fileName,data,overWrite);
+
+    }
+
+    private String encodeItemCodes(ArrayList<POPQRBarcode> bc) {
+        String JanList = bc.stream()
+                .map(x -> x.getParsedValue().get("JAN"))
+                .collect(Collectors.joining("\r\n"));
+
+        String encodedString = Base64.getEncoder().encodeToString(JanList.getBytes());
+
+        return encodedString;
+    }
+
+    private String getFileName() {
+        String filename;
+        String template = "'%s'_'%s'_'%s'.csv ";
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+
+        filename = String.format(template, "9011",formatter.format(date), "00000");
+
+        return filename;
+    }
+
+    private SoapObject SQL_ExecuteSQLAdapterRequest(String clientID, String tableName, String sSQL) {
+
+        final String SOAP_ACTION = "http://tempuri.org/SQL_ExecuteSQLAdapter";
+        final String OPERATION_NAME = "SQL_ExecuteSQLAdapter";
 
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-        request.addProperty("ClientID","demo");
+        request.addProperty("ClientID",clientID);
         request.addProperty("sSQL", sSQL);
-        request.addProperty("TableName", "TB_STDMAST");
-
+        request.addProperty("TableName", tableName);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
         envelope.setOutputSoapObject(request);
         HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
 
-        try
-        {
+        SoapObject response = null;
+
+        try {
             httpTransport.call(SOAP_ACTION, envelope);
-            SoapObject response = (SoapObject) envelope.getResponse();
-            UrinaviMasterTable master = new UrinaviMasterTable(response);
+            response = (SoapObject) envelope.getResponse();
 
-            for (POPQRBarcode bc: barcodes) {
-                if (bc.rawValue.equals("Read QR Codes:")) continue;
-                if (bc.barcodeStatus == BarcodeBase.status.Correct || bc.barcodeStatus == BarcodeBase.status.Incorrect) continue;
-                String janCode = bc.getParsedValue().get("JAN");
-                if (master.Match(janCode)) {
-                    String correctPrice = master.GetPrice(janCode);
-                    if (correctPrice.equals(bc.getParsedValue().get("POP売価"))) {
-                        bc.barcodeStatus = BarcodeBase.status.Correct;
-                    } else {
-                        bc.barcodeStatus = BarcodeBase.status.Incorrect;
-                        bc.errorType = correctPrice;
-                        bc.errorComment = "売価ミス";
-                    }
-                }
-                else {
-                    bc.barcodeStatus = BarcodeBase.status.Incorrect;
-                    bc.errorType = "N/A";
-                    bc.errorComment = "POP違い";
-                }
-            }
-
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             String log = exception.getMessage();
         }
+
+        return response;
+    }
+
+    private SoapObject FTP_UpLoadFileRequest(String clientID, String folderPath,String fileName, String data, Boolean Overwrite) {
+
+        final String SOAP_ACTION = "http://tempuri.org/FTP_UpLoadFile";
+        final String OPERATION_NAME = "FTP_UpLoadFile";
+
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+        request.addProperty("ClientID",clientID);
+        request.addProperty("FolderPath", folderPath);
+        request.addProperty("FileName", fileName);
+        request.addProperty("Base64", data);
+        request.addProperty("OverWrite", Overwrite);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
+
+        SoapObject response = null;
+
+        try {
+            httpTransport.call(SOAP_ACTION, envelope);
+            response = (SoapObject) envelope.getResponse();
+
+        } catch (Exception exception) {
+            String log = exception.getMessage();
+        }
+
+        return response;
     }
 
 }

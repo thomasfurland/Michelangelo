@@ -57,6 +57,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeChecker;
 import com.bv.netpop.mobileQR.java.barcodechecker.BarcodeCheckerAdapter;
 import com.bv.netpop.mobileQR.java.barcodes.BarcodeBase;
 import com.bv.netpop.mobileQR.java.barcodes.POPQRBarcode;
@@ -71,10 +72,11 @@ import com.bv.netpop.mobileQR.preference.PreferenceUtils;
 import com.bv.netpop.mobileQR.preference.SettingsActivity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** Live preview demo app for ML Kit APIs using CameraX. */
 @KeepName
-@RequiresApi(VERSION_CODES.LOLLIPOP)
+@RequiresApi(VERSION_CODES.O)
 public final class CameraXLivePreviewActivity extends AppCompatActivity
     implements OnRequestPermissionsResultCallback{
   private static final String TAG = "CameraXLivePreview";
@@ -178,6 +180,17 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                  BarcodeChecker bcc = new BarcodeChecker();
+
+                  ArrayList<POPQRBarcode> IncorrectBarcodes = barcodes.stream()
+                        .filter(x -> {
+                          final boolean b = x.barcodeStatus == BarcodeBase.status.Incorrect;
+                          return b; })
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+                  bcc.SendReprintItems(IncorrectBarcodes);
+
                   Toast toast = Toast.makeText(getApplicationContext(), "出力完了", Toast.LENGTH_LONG);
                   toast.show();
                 }

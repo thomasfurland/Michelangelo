@@ -40,7 +40,6 @@ import com.bv.netpop.mobileQR.GraphicOverlay;
 import com.bv.netpop.mobileQR.java.VisionProcessorBase;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +54,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
   private final boolean start;
   private final int sound1;
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  @RequiresApi(api = Build.VERSION_CODES.O)
   public BarcodeScannerProcessor(Context context, ArrayList<POPQRBarcode> bc, BarcodeCheckerAdapter projectAdapter, boolean start) {
     super(context);
     barcodeScanner = BarcodeScanning.getClient(
@@ -91,7 +90,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     return barcodeScanner.process(image);
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.N)
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   protected void onSuccess(
       @NonNull List<Barcode> barcodes, @NonNull GraphicOverlay graphicOverlay) {
@@ -119,20 +118,9 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
         //send request to server with callback
         BarcodeChecker bcc = new BarcodeChecker();
-        bcc.checkBarcode(bc);
+        bcc.CheckTemplateFolderName(bc.get(1));
+        if (bc.get(1).barcodeStatus == BarcodeBase.status.Correct) bcc.checkBarcode(bc.get(1));
         projectAdapter.notifyItemChanged(1);
-
-        bc.sort((o1, o2) -> {
-          if(o1.rawValue == "Read QR Codes:" || o2.rawValue == "Read QR Codes:") return 0;
-
-          if (o1.barcodeStatus == o2.barcodeStatus) {
-            return 0;
-          } else if (o1.barcodeStatus == BarcodeBase.status.Incorrect) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
 
         changes = true;
 
@@ -141,7 +129,21 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
         graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode, existingBarcode));
       }
     }
-    if (changes) projectAdapter.notifyDataSetChanged();
+    if (changes) {
+      bc.sort((o1, o2) -> {
+        if(o1.rawValue.equals("Read QR Codes:") || o2.rawValue.equals("Read QR Codes:")) return 0;
+        if (o1.barcodeStatus == o2.barcodeStatus) {
+          return 0;
+        } else if (o1.barcodeStatus == BarcodeBase.status.Incorrect) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+
+      projectAdapter.notifyDataSetChanged();
+    }
+
   }
 
   @Override

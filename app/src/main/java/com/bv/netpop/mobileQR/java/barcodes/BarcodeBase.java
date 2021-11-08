@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class BarcodeBase implements Parcelable {
     public String rawValue;
-    private Map<String,String> _parsedValue;
+    protected Map<String,String> _parsedValue;
 
     public Map<String, String> getParsedValue() {
         if (_parsedValue == null) {
@@ -30,9 +30,13 @@ public class BarcodeBase implements Parcelable {
 
     public static Boolean QRMatch(String value) {
 
+        if(value == null) {
+            return false;
+        }
+
         List<String> sections = Arrays.asList(value.split("\\+"));
 
-        if (!(sections.size() == 9)) {
+        if (!(sections.size() == 9) && !(sections.size() == 4)) {
             return false;
         }
 

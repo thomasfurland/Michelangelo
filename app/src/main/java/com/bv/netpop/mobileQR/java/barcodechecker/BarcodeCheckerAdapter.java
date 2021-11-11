@@ -66,10 +66,16 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        if (position == 0) {
+            //setHeaderViews(holder);
+            //holder.bcStatusTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+
         holder.bcCorrectImage.setVisibility(View.GONE);
         holder.bcIncorrectImage.setVisibility(View.GONE);
         holder.bcPendingBar.setVisibility(View.GONE);
-        holder.bcStatusTextView.setVisibility(View.GONE);
 
         holder.bcCheckBox.setVisibility(View.INVISIBLE);
 
@@ -77,22 +83,16 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
 
         POPQRBarcode barcode = mBarcodes.get(position);
 
-        if (position == 0) {
-            setHeaderViews(holder);
-            holder.bcStatusTextView.setVisibility(View.VISIBLE);
-            return;
-        }
-
-        holder.bcTextView.get(0).setText(barcode.getParsedValue().get("JAN"));
-        holder.bcTextView.get(1).setText(barcode.getParsedValue().get("品名"));
-        holder.bcTextView.get(2).setText(barcode.getParsedValue().get("POP種類名"));
+        holder.bcTextView.get(0).setText("JAN: " + barcode.getParsedValue().get("JAN"));
+        holder.bcTextView.get(1).setText("品名: " + barcode.getParsedValue().get("品名"));
+        holder.bcTextView.get(2).setText("POP種類: " + barcode.getParsedValue().get("POP種類名"));
 
         switch (barcode.getParsedValue().get("POP種類")) {
             case "7": //POP
-                holder.bcTextView.get(3).setText(barcode.getParsedValue().get("定番売価"));
+                holder.bcTextView.get(3).setText("売価: " + barcode.getParsedValue().get("定番売価"));
                 break;
             case "8": //特売
-                holder.bcTextView.get(3).setText(barcode.getParsedValue().get("POP売価"));
+                holder.bcTextView.get(3).setText("売価: " + barcode.getParsedValue().get("POP売価"));
         }
 
         switch(barcode.barcodeStatus) {
@@ -103,8 +103,8 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
                 holder.bcIncorrectImage.setVisibility(View.VISIBLE);
                 holder.bcCheckBox.setVisibility(View.VISIBLE);
 
-                holder.bcTextView.get(4).setText(barcode.errorType);
-                holder.bcTextView.get(5).setText(barcode.errorComment);
+                holder.bcTextView.get(4).setText("正規売価: " + barcode.errorType);
+                holder.bcTextView.get(5).setText("検証コメント: " + barcode.errorComment);
                 break;
             case Pending:
                 holder.bcPendingBar.setVisibility(View.VISIBLE);

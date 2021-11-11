@@ -126,7 +126,7 @@ public class BarcodeChecker  {
 
     private String getFileName() {
         String filename;
-        String template = "'%s'_'%s'_'%s'.csv ";
+        String template = "%s_%s_%s.csv ";
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");

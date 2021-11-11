@@ -41,6 +41,8 @@
         <entry key="app/src/main/res/layout/trash_style.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/menu/camera_button_menu.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/menu/pause_style.xml" value="0.24375" />
+        <entry key="app/src/main/res/xml/preference_live_preview_quickstart.xml" value="0.15416666666666667" />
+        <entry key="app/src/main/res/xml/preference_still_image.xml" value="0.1308876811594203" />
       </map>
     </option>
   </component>

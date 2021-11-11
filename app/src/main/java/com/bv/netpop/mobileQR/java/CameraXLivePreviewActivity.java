@@ -54,6 +54,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,6 +83,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
   private static final String TAG = "CameraXLivePreview";
   private static final int PERMISSION_REQUESTS = 1;
   private static final String BARCODE_SCANNING = "Barcode Scanning";
+
+  private final int prev_resWidth = 400;
+  private final int prev_resHeight = 300;
+  private final int anal_resWidth = 1800;
+  private final int anal_resHeight = 1300;
 
   private static final String STATE_SELECTED_MODEL = "selected_model";
 
@@ -154,6 +160,10 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     checkerAdapter = new BarcodeCheckerAdapter(barcodes);
     rvBarcodeChecks.setAdapter(checkerAdapter);
     rvBarcodeChecks.setLayoutManager(new LinearLayoutManager(this));
+
+    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvBarcodeChecks.getContext(),
+            DividerItemDecoration.VERTICAL);
+    rvBarcodeChecks.addItemDecoration(dividerItemDecoration);
 
     new ViewModelProvider(this, AndroidViewModelFactory.getInstance(getApplication()))
         .get(CameraXViewModel.class)
@@ -309,6 +319,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     if (targetResolution != null) {
       builder.setTargetResolution(targetResolution);
     }
+    builder.setTargetResolution(new Size(prev_resWidth,prev_resHeight));
+
     previewUseCase = builder.build();
     previewUseCase.setSurfaceProvider(previewView.getSurfaceProvider());
     cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, previewUseCase);
@@ -347,6 +359,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     if (targetResolution != null) {
       builder.setTargetResolution(targetResolution);
     }
+    builder.setTargetResolution(new Size(anal_resWidth,anal_resHeight));
     analysisUseCase = builder.build();
 
     needUpdateGraphicOverlayImageSourceInfo = true;

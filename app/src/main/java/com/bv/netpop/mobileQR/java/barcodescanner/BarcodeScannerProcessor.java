@@ -118,8 +118,9 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
 
         //send request to server with callback
         BarcodeChecker bcc = new BarcodeChecker();
-        bcc.CheckTemplateFolderName(bc.get(1));
-        if (bc.get(1).barcodeStatus == BarcodeBase.status.Correct) bcc.checkBarcode(bc.get(1));
+        bcc.checkBarcode(bc.get(1));
+        bcc.GetFolderName(bc.get(1));
+        if (bc.get(1).barcodeStatus == BarcodeBase.status.Correct) bcc.CheckPOPType(bc.get(1));
         projectAdapter.notifyItemChanged(1);
 
         changes = true;

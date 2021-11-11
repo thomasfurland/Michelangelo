@@ -58,7 +58,7 @@ public class UrinaviResponse {
             MapCells(row, col -> {
                 if (!col.getName().equals(this.PrimaryKey)) return;
                 SoapPrimitive value = (SoapPrimitive) col.getValue();
-                Boolean match = value.toString().equals(primaryKeyValue);
+                Boolean match = value.toString().trim().equals(primaryKeyValue);
                 foundMatch.set(match);
             });
         }

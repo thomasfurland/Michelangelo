@@ -22,6 +22,11 @@ public class UrinaviMasterTable extends UrinaviResponse {
         return lookupItem(janCode, priceCol);
     }
 
+    public String GetSalePrice(String janCode) {
+        String priceCol = "F6";
+        return lookupItem(janCode, priceCol);
+    }
+
     public String GetItemName(String janCode) {
         String itemNameCol = "F3";
         return lookupItem(janCode,itemNameCol);

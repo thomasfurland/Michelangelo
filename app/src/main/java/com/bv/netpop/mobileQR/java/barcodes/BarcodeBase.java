@@ -23,6 +23,7 @@ public class BarcodeBase implements Parcelable {
     public String errorType = "";
     public String errorComment = "";
     public status barcodeStatus = status.Pending;
+    public Boolean checked;
 
     public BarcodeBase(String value) {
         this.rawValue = value;
@@ -34,9 +35,9 @@ public class BarcodeBase implements Parcelable {
             return false;
         }
 
-        List<String> sections = Arrays.asList(value.split("\\+"));
+        List<String> sections = Arrays.asList(value.split("\\+",-1));
 
-        if (!(sections.size() == 9) && !(sections.size() == 4)) {
+        if (!(sections.size() == 5)) {
             return false;
         }
 
@@ -52,6 +53,7 @@ public class BarcodeBase implements Parcelable {
         errorType = in.readString();
         errorComment = in.readString();
         barcodeStatus = status.valueOf(in.readString());
+        checked = Boolean.valueOf(in.readString());
     }
 
     public static final Creator<BarcodeBase> CREATOR = new Creator<BarcodeBase>() {
@@ -85,6 +87,7 @@ public class BarcodeBase implements Parcelable {
         dest.writeString(errorType);
         dest.writeString(errorComment);
         dest.writeString(barcodeStatus.toString());
+        dest.writeString(checked.toString());
     }
 
     public enum status {

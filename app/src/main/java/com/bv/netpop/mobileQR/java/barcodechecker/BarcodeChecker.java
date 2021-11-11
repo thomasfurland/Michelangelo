@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -35,8 +34,18 @@ public class BarcodeChecker  {
 
         if (master.ContainsItem(janCode)) {
             bc.setItemName(master.GetItemName(janCode));
-            String correctPrice = master.GetPrice(janCode);
-            if (correctPrice.equals(bc.getParsedValue().get("POP売価"))) {
+            String correctPrice = "";
+            Boolean isCorrect = false;
+            switch (bc.getParsedValue().get("POP種類")) {
+                case "7": //POP
+                    correctPrice = master.GetPrice(janCode);
+                    isCorrect = correctPrice.equals(bc.getParsedValue().get("定番売価"));
+                    break;
+                case "8": //特売
+                    correctPrice = master.GetSalePrice(janCode);
+                    isCorrect = correctPrice.equals(bc.getParsedValue().get("POP売価"));
+            }
+            if (isCorrect) {
                 bc.barcodeStatus = BarcodeBase.status.Correct;
             } else {
                 bc.barcodeStatus = BarcodeBase.status.Incorrect;
@@ -51,7 +60,7 @@ public class BarcodeChecker  {
         }
     }
 
-    public void CheckTemplateFolderName(POPQRBarcode bc) {
+    public void GetFolderName(POPQRBarcode bc) {
         String sSQL = "select * from TB_FOLDER_TEMPLATE where TemplateFolderID = '%s'";
         String templateFolderID = bc.getParsedValue().get("POP種類");
         if(templateFolderID.equals("")) templateFolderID = "1";
@@ -62,7 +71,27 @@ public class BarcodeChecker  {
 
         if (folderTable.ContainsItem(templateFolderID)) {
             bc.setPOPType(folderTable.GetName(templateFolderID));
-            String correctType = folderTable.GetFolderID(templateFolderID);
+            return;
+        }
+        bc.barcodeStatus = BarcodeBase.status.Incorrect;
+        bc.errorComment = "POP違い";
+    }
+
+    public void CheckPOPType(POPQRBarcode bc) {
+        String sSQL = "select * from TB_STDMAST as m ";
+        sSQL += "join TB_POPTEMPLATE as t on m.T1 = 'demo.' + t.POPTemplateID ";
+        sSQL += "where F1 = '%s'";
+
+        String janCode = bc.getParsedValue().get("JAN");
+        sSQL = String.format(sSQL, janCode);
+
+        SoapObject response = this.SQL_ExecuteSQLAdapterRequest("Demo","TB_STDMAST",sSQL);
+        UrinaviMasterDisplayTable MasterDisplayTable = new UrinaviMasterDisplayTable(response);
+
+        String templateFolderID = bc.getParsedValue().get("POP種類");
+
+        if (MasterDisplayTable.ContainsItem(janCode)) {
+            String correctType = MasterDisplayTable.GetFolderID(templateFolderID);
             if (correctType.equals(templateFolderID)) {
                 bc.barcodeStatus = BarcodeBase.status.Correct;
                 return;

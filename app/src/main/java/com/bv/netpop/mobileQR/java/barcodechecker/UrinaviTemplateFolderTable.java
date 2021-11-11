@@ -2,8 +2,7 @@ package com.bv.netpop.mobileQR.java.barcodechecker;
 
 import org.ksoap2.serialization.SoapObject;
 
-public class UrinaviTemplateFolderTable extends UrinaviResponse{
-
+public class UrinaviTemplateFolderTable extends UrinaviResponse {
     public UrinaviTemplateFolderTable(SoapObject response) {
         super(response);
         DataTable = extractTable(rawResponse);
@@ -11,22 +10,7 @@ public class UrinaviTemplateFolderTable extends UrinaviResponse{
     }
 
     public String GetName(String TemplateFolderID) {
-        String priceCol = "TemplateFolderName";
-        return lookupItem(TemplateFolderID, priceCol);
+        String col = "TemplateFolderName";
+        return lookupItem(TemplateFolderID, col);
     }
-
-    public String GetFolderID(String TemplateFolderID) {
-        String returnValue = "";
-        switch (TemplateFolderID) {
-            case "":
-                break;
-            case "1":
-                returnValue = "1";
-                break;
-            default:
-                returnValue = "";
-        }
-        return returnValue;
-    }
-
 }

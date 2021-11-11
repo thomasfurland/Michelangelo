@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class POPQRBarcode extends BarcodeBase implements Parcelable {
+
     public POPQRBarcode(String value) {
         super(value);
     }
@@ -21,28 +22,21 @@ public class POPQRBarcode extends BarcodeBase implements Parcelable {
     protected Map<String, String> setParsedValue(String value) {
         Map<String,String> newParsedValue = new HashMap<>();
 
-        List<String> sections = Arrays.asList(value.split("\\+"));
+        List<String> sections = Arrays.asList(value.split("\\+",-1));
 
-        if (sections.size() == 4) {
+        if (sections.size() == 5) {
             newParsedValue.put("JOB",sections.get(0));
             newParsedValue.put("JAN",sections.get(1));
+            newParsedValue.put("POP種類",sections.get(2));
+            newParsedValue.put("定番売価",sections.get(3));
+            newParsedValue.put("POP売価",sections.get(4));
+            //updated later after successful read.
             newParsedValue.put("品名","");
-            newParsedValue.put("POP種類","");
-            newParsedValue.put("テンプレートCD","");
-            newParsedValue.put("定番売価","");
-            newParsedValue.put("POP売価",sections.get(3));
-            newParsedValue.put("MM個数","");
-            newParsedValue.put("MM売価","");
-        }else {
-            newParsedValue.put("JOB",sections.get(0));
-            newParsedValue.put("JAN",sections.get(1));
-            newParsedValue.put("品名",sections.get(2));
-            newParsedValue.put("POP種類",sections.get(3));
-            newParsedValue.put("テンプレートCD",sections.get(4));
-            newParsedValue.put("定番売価",sections.get(5));
-            newParsedValue.put("POP売価",sections.get(6));
-            newParsedValue.put("MM個数",sections.get(7));
-            newParsedValue.put("MM売価",sections.get(8));
+            newParsedValue.put("POP種類名","");
+
+
+            //newParsedValue.put("MM個数","");
+            //newParsedValue.put("MM売価","");
         }
         return newParsedValue;
     }
@@ -52,7 +46,7 @@ public class POPQRBarcode extends BarcodeBase implements Parcelable {
     }
 
     public void setPOPType(String value) {
-        this._parsedValue.put("POP種類",value);
+        this._parsedValue.put("POP種類名",value);
     }
 
 }

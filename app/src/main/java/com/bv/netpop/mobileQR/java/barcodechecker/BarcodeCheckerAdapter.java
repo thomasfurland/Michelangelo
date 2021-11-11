@@ -73,25 +73,27 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
 
         holder.bcCheckBox.setVisibility(View.INVISIBLE);
 
+        clearAllViews(holder);
+
         POPQRBarcode barcode = mBarcodes.get(position);
 
         if (position == 0) {
-            holder.bcTextView.get(0).setText("JAN");
-            holder.bcTextView.get(1).setText("品名");
-            holder.bcTextView.get(2).setText("POP種類");
-            holder.bcTextView.get(3).setText("POP売価");
-            holder.bcTextView.get(4).setText("正規売価");
-            holder.bcTextView.get(5).setText("検証コメント");
-
+            setHeaderViews(holder);
             holder.bcStatusTextView.setVisibility(View.VISIBLE);
-
             return;
         }
 
         holder.bcTextView.get(0).setText(barcode.getParsedValue().get("JAN"));
         holder.bcTextView.get(1).setText(barcode.getParsedValue().get("品名"));
-        holder.bcTextView.get(2).setText(barcode.getParsedValue().get("POP種類"));
-        holder.bcTextView.get(3).setText(barcode.getParsedValue().get("POP売価"));
+        holder.bcTextView.get(2).setText(barcode.getParsedValue().get("POP種類名"));
+
+        switch (barcode.getParsedValue().get("POP種類")) {
+            case "7": //POP
+                holder.bcTextView.get(3).setText(barcode.getParsedValue().get("定番売価"));
+                break;
+            case "8": //特売
+                holder.bcTextView.get(3).setText(barcode.getParsedValue().get("POP売価"));
+        }
 
         switch(barcode.barcodeStatus) {
             case Correct:
@@ -115,4 +117,23 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
     public int getItemCount() {
         return mBarcodes.size();
     }
+
+    private void clearAllViews(@NonNull ViewHolder holder) {
+        holder.bcTextView.get(0).setText("");
+        holder.bcTextView.get(1).setText("");
+        holder.bcTextView.get(2).setText("");
+        holder.bcTextView.get(3).setText("");
+        holder.bcTextView.get(4).setText("");
+        holder.bcTextView.get(5).setText("");
+    }
+
+    private void setHeaderViews(@NonNull ViewHolder holder) {
+        holder.bcTextView.get(0).setText("JAN");
+        holder.bcTextView.get(1).setText("品名");
+        holder.bcTextView.get(2).setText("POP種類");
+        holder.bcTextView.get(3).setText("POP売価");
+        holder.bcTextView.get(4).setText("正規売価");
+        holder.bcTextView.get(5).setText("検証コメント");
+    }
+
 }

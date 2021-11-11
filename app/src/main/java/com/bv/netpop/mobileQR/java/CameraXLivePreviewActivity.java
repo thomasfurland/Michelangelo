@@ -126,8 +126,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     if (savedInstanceState != null) {
       selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
       activeFlag = savedInstanceState.getBoolean("ActiveFlag");
-    } else {
-      barcodes.add(0, new POPQRBarcode("Read QR Codes:"));
     }
 
     ArrayList<BarcodeBase> bc_list = getIntent().getParcelableArrayListExtra("BarcodeArray");
@@ -219,8 +217,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 .setPositiveButton("Yes", (dialog, which) -> {
                   int size = barcodes.size();
                   barcodes.clear();
-                  barcodes.add(0,new POPQRBarcode("Read QR Codes:"));
-                  checkerAdapter.notifyItemRangeRemoved(1,size-1);
+                  checkerAdapter.notifyItemRangeRemoved(0,size-1);
                   dialog.dismiss();
 
                   Toast toast = Toast.makeText(this, "Scan List Cleared.", Toast.LENGTH_LONG);

@@ -67,12 +67,6 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (position == 0) {
-            //setHeaderViews(holder);
-            //holder.bcStatusTextView.setVisibility(View.VISIBLE);
-            return;
-        }
-
         holder.bcCorrectImage.setVisibility(View.GONE);
         holder.bcIncorrectImage.setVisibility(View.GONE);
         holder.bcPendingBar.setVisibility(View.GONE);
@@ -125,15 +119,6 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
         holder.bcTextView.get(3).setText("");
         holder.bcTextView.get(4).setText("");
         holder.bcTextView.get(5).setText("");
-    }
-
-    private void setHeaderViews(@NonNull ViewHolder holder) {
-        holder.bcTextView.get(0).setText("JAN");
-        holder.bcTextView.get(1).setText("品名");
-        holder.bcTextView.get(2).setText("POP種類");
-        holder.bcTextView.get(3).setText("POP売価");
-        holder.bcTextView.get(4).setText("正規売価");
-        holder.bcTextView.get(5).setText("検証コメント");
     }
 
 }

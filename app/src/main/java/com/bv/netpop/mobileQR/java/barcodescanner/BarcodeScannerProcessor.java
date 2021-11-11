@@ -110,18 +110,18 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
       }
       POPQRBarcode objBarcode = new POPQRBarcode(rawBC);
       if(bc.stream().noneMatch(x -> x.rawValue.equals(rawBC))) {
-        bc.add(1,objBarcode);
-        projectAdapter.notifyItemInserted(1);
+        bc.add(0,objBarcode);
+        projectAdapter.notifyItemInserted(0);
 
         soundPool.play(sound1,1,1,0,0,1);
         graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode, objBarcode));
 
         //send request to server with callback
         BarcodeChecker bcc = new BarcodeChecker();
-        bcc.checkBarcode(bc.get(1));
-        bcc.GetFolderName(bc.get(1));
-        if (bc.get(1).barcodeStatus == BarcodeBase.status.Correct) bcc.CheckPOPType(bc.get(1));
-        projectAdapter.notifyItemChanged(1);
+        bcc.checkBarcode(bc.get(0));
+        bcc.GetFolderName(bc.get(0));
+        if (bc.get(0).barcodeStatus == BarcodeBase.status.Correct) bcc.CheckPOPType(bc.get(0));
+        projectAdapter.notifyItemChanged(0);
 
         changes = true;
 
@@ -132,7 +132,6 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     }
     if (changes) {
       bc.sort((o1, o2) -> {
-        if(o1.rawValue.equals("Read QR Codes:") || o2.rawValue.equals("Read QR Codes:")) return 0;
         if (o1.barcodeStatus == o2.barcodeStatus) {
           return 0;
         } else if (o1.barcodeStatus == BarcodeBase.status.Incorrect) {

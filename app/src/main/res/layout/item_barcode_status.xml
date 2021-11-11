@@ -11,7 +11,7 @@
     android:paddingBottom="8dp"
     android:visibility="visible"
     android:weightSum="10"
-    tools:visibility="visible">
+    tools:visibility="visible">213
 
     <CheckBox
         android:id="@+id/sendCheckBox"
@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/jan_code"
-                android:layout_width="65dp"
+                android:layout_width="70dp"
                 android:layout_height="25dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1" />
@@ -83,7 +83,7 @@
             tools:visibility="visible">
 
             <LinearLayout
-                android:layout_width="65dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="0dp"

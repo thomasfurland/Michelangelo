@@ -91,7 +91,7 @@ public class BarcodeChecker  {
         String templateFolderID = bc.getParsedValue().get("POP種類");
 
         if (MasterDisplayTable.ContainsItem(janCode)) {
-            String correctType = MasterDisplayTable.GetFolderID(templateFolderID);
+            String correctType = MasterDisplayTable.GetFolderID(janCode);
             if (correctType.equals(templateFolderID)) {
                 bc.barcodeStatus = BarcodeBase.status.Correct;
                 return;
@@ -104,6 +104,8 @@ public class BarcodeChecker  {
     }
 
     public void SendReprintItems(ArrayList<POPQRBarcode> bc) {
+
+        if(bc.size() < 1) return;
 
         String folderPath = "E:\\inetpub\\ftproot\\demo";
         String fileName = this.getFileName();

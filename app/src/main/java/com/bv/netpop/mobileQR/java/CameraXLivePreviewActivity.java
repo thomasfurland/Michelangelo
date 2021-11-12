@@ -188,22 +188,26 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                  String ToastText = "";
                   BarcodeChecker bcc = new BarcodeChecker();
 
                   ArrayList<POPQRBarcode> IncorrectBarcodes = barcodes.stream()
-                        .filter(x -> {
-                          final boolean b = x.barcodeStatus == BarcodeBase.status.Incorrect;
-                          return b; })
-                        .collect(Collectors.toCollection(ArrayList::new));
+                          .filter(x -> {
+                            final boolean b = x.barcodeStatus == BarcodeBase.status.Incorrect;
+                            return b;
+                          })
+                          .collect(Collectors.toCollection(ArrayList::new));
+                  if (IncorrectBarcodes.size() > 1) {
+                    bcc.SendReprintItems(IncorrectBarcodes);
+                    ToastText = "出力完了";
+                  } else {
+                    ToastText = "出力数「０」件";
+                  }
 
-                  bcc.SendReprintItems(IncorrectBarcodes);
-
-                  Toast toast = Toast.makeText(getApplicationContext(), "出力完了", Toast.LENGTH_LONG);
+                  Toast toast = Toast.makeText(getApplicationContext(), ToastText, Toast.LENGTH_LONG);
                   toast.show();
                 }
-              });
-              dlgAlert.setCancelable(true);
+              }).setCancelable(true);
               dlgAlert.create().show();
             }
     );
@@ -217,7 +221,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                 .setPositiveButton("Yes", (dialog, which) -> {
                   int size = barcodes.size();
                   barcodes.clear();
-                  checkerAdapter.notifyItemRangeRemoved(0,size-1);
+                  checkerAdapter.notifyItemRangeRemoved(0,size);
                   dialog.dismiss();
 
                   Toast toast = Toast.makeText(this, "Scan List Cleared.", Toast.LENGTH_LONG);

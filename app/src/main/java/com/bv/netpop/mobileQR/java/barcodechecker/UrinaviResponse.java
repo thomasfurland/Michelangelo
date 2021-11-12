@@ -1,5 +1,9 @@
 package com.bv.netpop.mobileQR.java.barcodechecker;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -53,41 +57,47 @@ public class UrinaviResponse {
         return table;
     }
     public Boolean ContainsItem(String primaryKeyValue) {
-        AtomicBoolean foundMatch = new AtomicBoolean(false);
         for (SoapObject row: DataTable.data) {
-            MapCells(row, col -> {
-                if (!col.getName().equals(this.PrimaryKey)) return;
-                SoapPrimitive value = (SoapPrimitive) col.getValue();
-                Boolean match = value.toString().trim().equals(primaryKeyValue);
-                foundMatch.set(match);
-            });
+            if(this.rowContainsItem(row,this.PrimaryKey,primaryKeyValue)) return true;
         }
-        return foundMatch.get();
+        return false;
     }
 
     public String lookupItem(String primaryKeyValue, String colName) {
         AtomicReference<String> lookUpValue = new AtomicReference<>("");
-        this.MapFilteredRows(DataTable.data, primaryKeyValue,col -> {
+        this.AccessMatchedRows(DataTable.data, this.PrimaryKey,primaryKeyValue,col -> {
             if (!col.getName().equals(colName)) {
                 return;
             }
-            SoapPrimitive value = (SoapPrimitive) col.getValue();
-            lookUpValue.set((String) value.getValue());
+            String value = "";
+
+            //Null及び、空白値以外の場合はSoapPrimitiveのタイプ。
+            if (col.getValue() instanceof SoapPrimitive){
+                SoapPrimitive soapValue = (SoapPrimitive) col.getValue();
+                value = (String) soapValue.getValue();
+            }
+            lookUpValue.set(value);
         });
         return lookUpValue.get();
     }
 
-    protected void MapFilteredRows(ArrayList<SoapObject> table, String primaryKeyValue, UrinaviMasterTable.TwoDMapFunction func) {
+    protected void AccessMatchedRows(ArrayList<SoapObject> table, String itemKey, String itemValue, UrinaviMasterTable.TwoDMapFunction func) {
         for (SoapObject row: table) {
-            AtomicBoolean foundMatch = new AtomicBoolean(false);
-            MapCells(row, col -> {
-                if (!col.getName().equals(this.PrimaryKey)) {
-                    return;
-                }
-                foundMatch.set(true);
-            });
-            if (foundMatch.get()) MapCells(row, col -> func.map(col));
+            if (this.rowContainsItem(row,itemKey,itemValue)) {
+                MapCells(row, col -> func.map(col));
+            }
         }
+    }
+
+    private boolean rowContainsItem(SoapObject row, String itemKey,String itemValue) {
+        AtomicBoolean foundMatch = new AtomicBoolean(false);
+        MapCells(row, col -> {
+            if (!col.getName().equals(itemKey)) return;
+            SoapPrimitive value = (SoapPrimitive) col.getValue();
+            Boolean match = value.toString().trim().equals(itemValue.trim());
+            foundMatch.set(match);
+        });
+        return foundMatch.get();
     }
 
     private void MapCells(SoapObject row, UrinaviMasterTable.TwoDMapFunction func) {

@@ -1,6 +1,7 @@
 package com.bv.netpop.mobileQR.java.barcodechecker;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,8 +98,16 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
                 holder.bcIncorrectImage.setVisibility(View.VISIBLE);
                 holder.bcCheckBox.setVisibility(View.VISIBLE);
 
-                holder.bcTextView.get(4).setText("正規売価: " + barcode.errorType);
-                holder.bcTextView.get(5).setText("検証コメント: " + barcode.errorComment);
+                holder.bcTextView.get(5).setText(barcode.errorComment);
+                holder.bcTextView.get(5).setTextColor(Color.parseColor("#ffff4444"));
+
+                switch (barcode.errorType) {
+                    case "":
+                        holder.bcTextView.get(4).setText("");
+                        break;
+                    default:
+                        holder.bcTextView.get(4).setText("正規売価: " + barcode.errorType);
+                }
                 break;
             case Pending:
                 holder.bcPendingBar.setVisibility(View.VISIBLE);

@@ -86,8 +86,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
   private final int prev_resWidth = 400;
   private final int prev_resHeight = 300;
-  private final int anal_resWidth = 1800;
-  private final int anal_resHeight = 1300;
+  private final int anal_resWidth = 400;
+  private final int anal_resHeight = 300;
 
   private static final String STATE_SELECTED_MODEL = "selected_model";
 

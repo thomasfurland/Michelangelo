@@ -197,7 +197,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             return b;
                           })
                           .collect(Collectors.toCollection(ArrayList::new));
-                  if (IncorrectBarcodes.size() > 1) {
+                  if (IncorrectBarcodes.size() > 0) {
                     bcc.SendReprintItems(IncorrectBarcodes);
                     ToastText = "出力完了";
                   } else {
@@ -216,18 +216,18 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     resetButton.setOnClickListener(
             v -> {
               AlertDialog.Builder alert = new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Are you sure you want to delete?")
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setTitle("削除")
+                .setMessage("アイテム一覧を削除しますか。")
+                .setPositiveButton("はい", (dialog, which) -> {
                   int size = barcodes.size();
                   barcodes.clear();
                   checkerAdapter.notifyItemRangeRemoved(0,size);
                   dialog.dismiss();
 
-                  Toast toast = Toast.makeText(this, "Scan List Cleared.", Toast.LENGTH_LONG);
+                  Toast toast = Toast.makeText(this, "削除完了", Toast.LENGTH_LONG);
                   toast.show();
                 });
-              alert.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+              alert.setNegativeButton("いいえ", (dialog, which) -> dialog.dismiss());
 
               alert.show();
             }
@@ -242,7 +242,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               activeFlag = true;
               bindAnalysisUseCase();
 
-              Toast toast = Toast.makeText(this, "Starting Scanner!", Toast.LENGTH_SHORT);
+              Toast toast = Toast.makeText(this, "スキャン開始", Toast.LENGTH_SHORT);
               toast.show();
 
               stopButton.setVisibility(View.VISIBLE);
@@ -256,7 +256,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
               activeFlag = false;
               bindAnalysisUseCase();
 
-              Toast toast = Toast.makeText(this, "Pausing Scanner.", Toast.LENGTH_SHORT);
+              Toast toast = Toast.makeText(this, "スキャン停止", Toast.LENGTH_SHORT);
               toast.show();
 
               stopButton.setVisibility(View.GONE);

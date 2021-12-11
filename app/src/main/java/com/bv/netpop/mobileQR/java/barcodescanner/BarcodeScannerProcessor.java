@@ -76,7 +76,7 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
             .setAudioAttributes(audioAttributes)
             .build();
 
-    sound1 = soundPool.load(context, R.raw.beep_sound,1);
+    sound1 = soundPool.load(context, R.raw.beep_sound_compressed,1);
   }
 
   @Override

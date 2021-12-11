@@ -56,17 +56,13 @@
         <activity
             android:name=".java.CameraXLivePreviewActivity"
             android:exported="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".preference.SettingsActivity"
             android:exported="false"/>
-
-        <activity
-            android:name=".java.barcodechecker.BarcodeCheckerActivity"
-            android:exported="true">
-        </activity>
 
     </application>
     <queries>

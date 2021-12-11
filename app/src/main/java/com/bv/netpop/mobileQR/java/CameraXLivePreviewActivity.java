@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build.VERSION;
@@ -31,21 +30,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Size;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.camera.core.CameraInfoUnavailableException;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
@@ -70,7 +60,7 @@ import com.bv.netpop.mobileQR.R;
 import com.bv.netpop.mobileQR.VisionImageProcessor;
 import com.bv.netpop.mobileQR.java.barcodescanner.BarcodeScannerProcessor;
 import com.bv.netpop.mobileQR.preference.PreferenceUtils;
-import com.bv.netpop.mobileQR.preference.SettingsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -191,14 +181,15 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                   String ToastText = "";
                   BarcodeChecker bcc = new BarcodeChecker();
 
-                  ArrayList<POPQRBarcode> IncorrectBarcodes = barcodes.stream()
+                  ArrayList<POPQRBarcode> ReprintBarcodes = barcodes.stream()
                           .filter(x -> {
                             final boolean b = x.barcodeStatus == BarcodeBase.status.Incorrect;
-                            return b;
+                            final boolean c = x.checked;
+                            return b && c;
                           })
                           .collect(Collectors.toCollection(ArrayList::new));
-                  if (IncorrectBarcodes.size() > 0) {
-                    bcc.SendReprintItems(IncorrectBarcodes);
+                  if (ReprintBarcodes.size() > 0) {
+                    bcc.SendReprintItems(ReprintBarcodes);
                     ToastText = "出力完了";
                   } else {
                     ToastText = "出力数「０」件";

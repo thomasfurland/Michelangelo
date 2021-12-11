@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,6 +100,9 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
                 holder.bcIncorrectImage.setVisibility(View.VISIBLE);
                 holder.bcCheckBox.setVisibility(View.VISIBLE);
 
+                holder.bcCheckBox.setOnCheckedChangeListener(null);
+                holder.bcCheckBox.setChecked(barcode.checked);
+
                 holder.bcTextView.get(5).setText(barcode.errorComment);
                 holder.bcTextView.get(5).setTextColor(Color.parseColor("#ffff4444"));
 
@@ -114,6 +119,9 @@ public class BarcodeCheckerAdapter extends RecyclerView.Adapter<BarcodeCheckerAd
                 holder.bcPendingBar.animate();
                 break;
         }
+        holder.bcCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            barcode.checked = isChecked;
+        });
     }
 
     @Override

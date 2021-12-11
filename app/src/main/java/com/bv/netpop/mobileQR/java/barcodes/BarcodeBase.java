@@ -23,7 +23,7 @@ public class BarcodeBase implements Parcelable {
     public String errorType = "";
     public String errorComment = "";
     public status barcodeStatus = status.Pending;
-    public Boolean checked;
+    public Boolean checked = true;
 
     public BarcodeBase(String value) {
         this.rawValue = value;

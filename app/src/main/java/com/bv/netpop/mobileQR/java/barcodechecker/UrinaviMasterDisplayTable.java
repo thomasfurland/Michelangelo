@@ -6,7 +6,6 @@ public class UrinaviMasterDisplayTable extends UrinaviResponse{
 
     public UrinaviMasterDisplayTable(SoapObject response) {
         super(response);
-        DataTable = extractTable(rawResponse);
         PrimaryKey = "F1";
     }
 

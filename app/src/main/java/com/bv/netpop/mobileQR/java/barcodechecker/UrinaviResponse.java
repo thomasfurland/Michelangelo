@@ -21,6 +21,7 @@ public class UrinaviResponse {
 
     public UrinaviResponse(SoapObject response) {
         rawResponse = response;
+        DataTable = extractTable(rawResponse);
     }
 
     public static class Table {
@@ -105,6 +106,21 @@ public class UrinaviResponse {
             PropertyInfo colInfo = (PropertyInfo) row.getPropertyInfo(i);
             func.map(colInfo);
         }
+    }
+
+    public String ResponseStatus() {
+        return GetInfo("STSFLG");
+    }
+
+    public String GetInfo(String propertyName) {
+        AtomicReference<String> propertyValue = new AtomicReference<>("");
+        MapCells(this.DataTable.info, info -> {
+            if(info.getName().equals(propertyName)) {
+                SoapPrimitive value = (SoapPrimitive) info.getValue();
+                propertyValue.set((String)value.getValue());
+            }
+        });
+        return propertyValue.get();
     }
 
 }

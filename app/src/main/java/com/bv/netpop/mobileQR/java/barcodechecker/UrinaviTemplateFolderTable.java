@@ -5,7 +5,6 @@ import org.ksoap2.serialization.SoapObject;
 public class UrinaviTemplateFolderTable extends UrinaviResponse {
     public UrinaviTemplateFolderTable(SoapObject response) {
         super(response);
-        DataTable = extractTable(rawResponse);
         PrimaryKey = "TemplateFolderID";
     }
 

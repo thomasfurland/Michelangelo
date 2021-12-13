@@ -13,7 +13,6 @@ public class UrinaviMasterTable extends UrinaviResponse {
 
     public UrinaviMasterTable(SoapObject response) {
         super(response);
-        DataTable = extractTable(rawResponse);
         PrimaryKey = "F1";
     }
 

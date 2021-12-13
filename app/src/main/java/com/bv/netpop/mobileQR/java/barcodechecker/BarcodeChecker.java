@@ -1,5 +1,6 @@
 package com.bv.netpop.mobileQR.java.barcodechecker;
 
+import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -196,4 +197,34 @@ public class BarcodeChecker  {
         return response;
     }
 
+    public Boolean PingServer() {
+        SoapObject response = this.CFG_GetClientConfig("Demo");
+        UrinaviResponse ResponseTable = new UrinaviResponse(response);
+        return ResponseTable.ResponseStatus().equals("0");
+    }
+
+    private SoapObject CFG_GetClientConfig(String clientID) {
+        final String SOAP_ACTION = "http://tempuri.org/CFG_GetClientConfig";
+        final String OPERATION_NAME = "CFG_GetClientConfig";
+
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+        request.addProperty("ClientID",clientID);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
+
+        SoapObject response = null;
+
+        try {
+            httpTransport.call(SOAP_ACTION, envelope);
+            response = (SoapObject) envelope.getResponse();
+
+        } catch (Exception exception) {
+            String log = exception.getMessage();
+        }
+
+        return response;
+    }
 }
